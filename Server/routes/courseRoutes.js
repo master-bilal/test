@@ -70,4 +70,7 @@ router.post(
 // 📌 راوت إحضار كورسات الأستاذ الحالي
 router.get("/my-courses", authMiddleware, courseController.getMyCourses);
 
+router.get("/:courseId/videos", courseController.getVideos);
+
+
 module.exports = router;

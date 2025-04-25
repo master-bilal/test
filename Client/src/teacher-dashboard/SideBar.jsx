@@ -57,8 +57,8 @@ const SideBar = () => {
       icon: <DocumentTextIcon className="w-5 h-5" />,
     },
     {
-      name: "Articles Management",
-      path: "/articlescardsDash",
+      name: "Teacher Courses",
+      path: "/teacher-dashboard/TeacherCourses",
       icon: <RectangleGroupIcon className="h-6 w-6" />,
     },
     {
