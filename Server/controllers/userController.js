@@ -151,7 +151,6 @@ const updateUserProfile = async (req, res) => {
   try {
     const { username, email } = req.body;
 
-    // Check if email is being changed to one that already exists
     if (email) {
       const existingUser = await User.findOne({
         email,
@@ -213,10 +212,58 @@ const updateProfilePicture = async (req, res) => {
   }
 };
 
+const updateSubscription = async (req, res) => {
+  try {
+    const { planName, period, price, currency } = req.body;
+
+    const userId = req.userId;
+
+    const duration = {
+      weekly: 7,
+      monthly: 30,
+      yearly: 365,
+    }[period];
+
+    const expiresAt = new Date();
+    expiresAt.setDate(expiresAt.getDate() + duration);
+
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      {
+        subscription: {
+          planName,
+          period,
+          price,
+          currency,
+          subscribedAt: new Date(),
+          expiresAt,
+        },
+      },
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
+    }
+
+    res.json({
+      success: true,
+      message: "Subscription updated",
+      user: updatedUser,
+    });
+  } catch (err) {
+    console.error("Error updating subscription:", err);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+};
+
 module.exports = {
   registerUser,
   loginUser,
   getUserProfile,
   updateUserProfile,
   updateProfilePicture,
+  updateSubscription,
 };
