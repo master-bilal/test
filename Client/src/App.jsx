@@ -23,6 +23,8 @@ import CoursesPage from "./pages/CoursesPage";
 import AboutUs from "./pages/About";
 import CreateCourse from "./teacher-dashboard/CreateCoursePage";
 import TeacherCourses from "./teacher-dashboard/TeacherCourses";
+import AddVideo from "./teacher-dashboard/AddVideo";
+import CourseVideos from "./teacher-dashboard/CourseVideos"
 function App() {
     const location = useLocation();
     
@@ -72,6 +74,15 @@ function App() {
         <Route
           path="/teacher-dashboard/TeacherCourses"
           element={<TeacherCourses />}
+        />
+        <Route
+          path="/teacher-dashboard/TeacherCourses/:courseId/add-video"
+          element={<AddVideo />}
+        />
+
+        <Route
+          path="/teacher-dashboard/TeacherCourses/:courseId/videos"
+          element={<CourseVideos />}
         />
       </Routes>
       {/* </Router> */}

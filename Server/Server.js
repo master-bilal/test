@@ -6,6 +6,7 @@ require("dotenv").config();
 const path = require("path");
 
 
+
 //the routes importing
 const userRoutes = require("./routes/userRoutes")
 const adminuser = require("./routes/adminUserRoutes")
@@ -37,11 +38,11 @@ app.use(cookieParser());
 
 
 //the routes
-app.use("/api/users", userRoutes);
-app.use("/api/admin/users", adminuser);
-app.use("/api/courses", courseRoutes);
 app.use('/api', contactRoutes);
-// app.use("/api/videos", videoRoutes);
+app.use("/api/users", userRoutes);
+// app.use("/api/admin/users", adminuser);
+app.use("/api/courses", courseRoutes);
+app.use("/api", videoRoutes);
 
 
 
