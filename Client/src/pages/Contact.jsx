@@ -44,7 +44,7 @@ const Contact = () => {
   };
 
   return (
-    <div className="bg-[#FFF7F2] min-h-screen py-16">
+    <div className="bg-[#FFF7F2] min-h-screen py-16 mt-16">
       {/* Header Section */}
       <div className="max-w-5xl mx-auto px-6 mb-12">
         <div className="relative text-center">

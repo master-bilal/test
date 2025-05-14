@@ -26,7 +26,7 @@ import CourseVideos from "./teacher-dashboard/CourseVideos";
 import ShopCourses from "./pages/ShopCourses";
 import CourseDetails from "./pages/CourseDetails";
 import MyCourses from "./pages/MyCourses.";
-import MyCourseDetails from "./pages/MyCourseDetails"
+import MyCourseDetails from "./pages/MyCourseDetails";
 import AvailabilityTeacher from "./teacher-dashboard/BookingDash";
 function App() {
   const location = useLocation();
@@ -43,7 +43,6 @@ function App() {
         "/shop/courses/:id",
         "/mycourses",
       ].includes(location.pathname) && <Navbar />}
-      {/* <NavbarSpacer /> */}
 
       {[
         "/dashboard",
