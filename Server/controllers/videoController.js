@@ -18,7 +18,7 @@ const addVideoToCourse = async (req, res) => {
     const newVideo = await Video.create({
       title,
       description,
-      videoUrl: req.file.filename, // فقط اسم الملف لأن المسار معروف
+      videoUrl: `uploads/courseVideos/${req.file.filename}`,
       courseId,
     });
 
@@ -34,5 +34,36 @@ const addVideoToCourse = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+const getCourseVideos = async (req, res) => {
+  try {
+    const courseId = req.params.id;
 
-module.exports = { addVideoToCourse };
+    // التأكد من وجود الكورس
+    const course = await Course.findById(courseId);
+    if (!course) {
+      return res.status(404).json({
+        success: false,
+        message: "الكورس غير موجود",
+      });
+    }
+
+    // جلب الفيديوهات المرتبطة بالكورس
+    const videos = await Video.find({ courseId })
+      .sort({ uploadedAt: 1 })
+      .select("-__v -createdAt -updatedAt");
+
+    res.status(200).json({
+      success: true,
+      count: videos.length,
+      data: videos,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      success: false,
+      message: "حدث خطأ في السيرفر",
+    });
+  }
+};
+
+module.exports = { addVideoToCourse, getCourseVideos, };

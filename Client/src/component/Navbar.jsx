@@ -72,10 +72,10 @@ const Navbar = () => {
                 { name: "الرئيسية", path: "/" },
                 { name: "عن الدار", path: "/aboutus" },
                 { name: "الإجازات", path: "/ijazat" },
-                { name: "الدورات", path: "/courses" },
+                { name: "الدورات", path: "/shop/courses" },
                 { name: "الاختبارات", path: "/exams" },
                 { name: "المعلمون", path: "/teachers" },
-                { name: "المدونة", path: "/blog" },
+                { name: "دوراتي", path: "/mycourses" },
                 { name: "تواصل معنا", path: "/contactus" },
               ].map((item) => (
                 <li key={item.name} className="mx-4">

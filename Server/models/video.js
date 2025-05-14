@@ -10,7 +10,7 @@ const videoSchema = new mongoose.Schema(
       ref: "Course",
       required: true,
     }, // الدورة المرتبط بها الفيديو
-    order: { type: Number, required: true }, // ترتيب الفيديو داخل الدورة
+    // order: { type: Number, required: true }, // ترتيب الفيديو داخل الدورة
     uploadedAt: { type: Date, default: Date.now }, // وقت رفع الفيديو
   },
   { timestamps: true }

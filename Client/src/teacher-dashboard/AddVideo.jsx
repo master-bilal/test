@@ -22,7 +22,9 @@ const AddVideo = () => {
     formData.append("video", videoFile);
     formData.append("title", title);
     formData.append("description", description);
-
+ for (let [key, value] of formData.entries()) {
+   console.log(key, value);
+ }
     try {
       const res = await axios.post(
         `http://localhost:5000/api/courses/${courseId}/videos`,

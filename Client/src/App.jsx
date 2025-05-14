@@ -10,24 +10,27 @@ import SignUp from "./pages/SignUp";
 import Profile from "./pages/Profile";
 import Home from "./pages/Home";
 import Navbar from "./component/Navbar";
-import { NavbarSpacer } from "./component/Navbar";import Footer from "./component/Footer"
+import { NavbarSpacer } from "./component/Navbar";
+import Footer from "./component/Footer";
 import Programs from "./pages/Programs";
 import Contact from "./pages/Contact";
 import Payment from "./pages/Payment";
-import UploadVideo from "./pages/UploadVideo";
 import SideBar from "./teacher-dashboard/SideBar";
 import DashHome from "./teacher-dashboard/DashHome";
 import DashUsers from "./teacher-dashboard/DashUsers";
-import CourseCard from "./pages/CourseCard";
-import CoursesPage from "./pages/CoursesPage";
 import AboutUs from "./pages/About";
 import CreateCourse from "./teacher-dashboard/CreateCoursePage";
 import TeacherCourses from "./teacher-dashboard/TeacherCourses";
 import AddVideo from "./teacher-dashboard/AddVideo";
-import CourseVideos from "./teacher-dashboard/CourseVideos"
+import CourseVideos from "./teacher-dashboard/CourseVideos";
+import ShopCourses from "./pages/ShopCourses";
+import CourseDetails from "./pages/CourseDetails";
+import MyCourses from "./pages/MyCourses.";
+import MyCourseDetails from "./pages/MyCourseDetails"
+import AvailabilityTeacher from "./teacher-dashboard/BookingDash";
 function App() {
-    const location = useLocation();
-    
+  const location = useLocation();
+
   return (
     <>
       {[
@@ -36,11 +39,11 @@ function App() {
         "/contactus",
         "/courses",
         "/profile",
-        "/",
-        "/",
-        "/",
+        "/shop/courses",
+        "/shop/courses/:id",
+        "/mycourses",
       ].includes(location.pathname) && <Navbar />}
-      <NavbarSpacer />
+      {/* <NavbarSpacer /> */}
 
       {[
         "/dashboard",
@@ -48,25 +51,26 @@ function App() {
         "/teacher-dashboard/DashUsers",
         "/teacher-dashboard/CreateCoursePage",
         "/teacher-dashboard/TeacherCourses",
-        "/",
+        "/teacher-dashboard/AvailabilityTeacher",
       ].includes(location.pathname) && <SideBar />}
 
-      {/* <Router> */}
       {/* <Navbar /> */}
+
+      {/* <Router> */}
       <Routes>
-        <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/" element={<Home />} />
-        <Route path="/programs" element={<Programs />} />
         <Route path="/contactus" element={<Contact />} />
+        <Route path="/aboutus" element={<AboutUs />} />
+        <Route path="/programs" element={<Programs />} />
         <Route path="/payment" element={<Payment />} />
-        <Route path="/upload" element={<UploadVideo />} />
+        <Route path="/mycourses" element={<MyCourses />} />
+        <Route path="/mycourse/:courseId" element={<MyCourseDetails />} />
+
         <Route path="/teacher-dashboard/DashHome" element={<DashHome />} />
         <Route path="/teacher-dashboard/DashUsers" element={<DashUsers />} />
-        <Route path="/courses" element={<CoursesPage />} />
-        <Route path="/coursecard" element={<CourseCard />} />
-        <Route path="/aboutus" element={<AboutUs />} />
         <Route
           path="/teacher-dashboard/CreateCoursePage"
           element={<CreateCourse />}
@@ -79,21 +83,29 @@ function App() {
           path="/teacher-dashboard/TeacherCourses/:courseId/add-video"
           element={<AddVideo />}
         />
+        <Route
+          path="/teacher-dashboard/AvailabilityTeacher"
+          element={<AvailabilityTeacher />}
+        />
 
         <Route
           path="/teacher-dashboard/TeacherCourses/:courseId/videos"
           element={<CourseVideos />}
         />
+        <Route path="/shop/courses" element={<ShopCourses />} />
+        <Route path="/shop/courses/:id" element={<CourseDetails />} />
       </Routes>
       {/* </Router> */}
 
+      {/*footer*/}
       {[
         "/",
         "/aboutus",
         "/contactus",
         "/coursepage",
         "/profile",
-        "/",
+        "/shop/courses",
+        "/shop/courses/:id",
         "/",
         "/",
       ].includes(location.pathname) && <Footer />}
