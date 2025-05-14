@@ -52,8 +52,8 @@ const SideBar = () => {
       icon: <ChartBarIcon className="w-5 h-5" />,
     },
     {
-      name: "Subscription Card Form",
-      path: "/subformDash",
+      name: "AvailabilityTeacher",
+      path: "/teacher-dashboard/AvailabilityTeacher",
       icon: <DocumentTextIcon className="w-5 h-5" />,
     },
     {

@@ -4,7 +4,7 @@ const path = require("path");
 
 const videoStorage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "public/uploads/videos");
+    cb(null, "uploads/courseVideos");
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + "-" + file.originalname);

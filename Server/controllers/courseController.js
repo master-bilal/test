@@ -1,6 +1,35 @@
 const Course = require("../models/courses");
 
-// دالة لجلب الكورسات الخاصة بالمدرس
+// ✅ جلب كل الكورسات لعرضها للطلاب
+const getAllCourses = async (req, res) => {
+  try {
+    const courses = await Course.find().populate("teacher", "username");
+    res.status(200).json(courses);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "فشل في جلب الكورسات" });
+  }
+};
+
+// ✅ جلب تفاصيل كورس معين (لصفحة التفاصيل)
+const getCourseById = async (req, res) => {
+  try {
+    const course = await Course.findById(req.params.id)
+      .populate("teacher", "username")
+      .populate("videos");
+
+    if (!course) {
+      return res.status(404).json({ message: "الكورس غير موجود" });
+    }
+
+    res.status(200).json(course);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "فشل في جلب تفاصيل الكورس" });
+  }
+};
+
+// ✅ جلب الكورسات الخاصة بالمدرس الحالي (حسب التوكن)
 const getMyCourses = async (req, res) => {
   try {
     const courses = await Course.find({ teacher: req.userId }).populate(
@@ -13,7 +42,7 @@ const getMyCourses = async (req, res) => {
   }
 };
 
-// دالة لجلب الفيديوهات الخاصة بكورس معين
+// ✅ جلب فيديوهات كورس معين
 const getVideos = async (req, res) => {
   try {
     const courseId = req.params.courseId;
@@ -23,7 +52,6 @@ const getVideos = async (req, res) => {
       return res.status(404).json({ message: "لم يتم العثور على الكورس" });
     }
 
-    // إرجاع الفيديوهات الخاصة بالكورس
     res.status(200).json(course.videos);
   } catch (error) {
     console.error(error);
@@ -32,6 +60,8 @@ const getVideos = async (req, res) => {
 };
 
 module.exports = {
+  getAllCourses,
+  getCourseById,
   getMyCourses,
-  getVideos, // إضافة getVideos إلى التصدير
+  getVideos,
 };

@@ -1,16 +1,18 @@
 const mongoose = require("mongoose");
 
 const certificateSchema = new mongoose.Schema({
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-  courseId: {
+  studentId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Course",
+    ref: "User",
     required: true,
   },
-  certificateIssuedDate: { type: Date, default: Date.now },
-  certificateUrl: { type: String, required: true },
+  bookingId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Booking",
+    required: true,
+  },
+  issuedAt: { type: Date, default: Date.now },
+  certificateLink: { type: String, required: true },
 });
 
-module.exports =
-  mongoose.models.Certificate ||
-  mongoose.model("Certificate", certificateSchema);
+module.exports = mongoose.model("Certificate", certificateSchema);
