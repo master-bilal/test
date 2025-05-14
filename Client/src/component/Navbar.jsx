@@ -42,7 +42,7 @@ const Navbar = () => {
   return (
     <>
       <header
-        className={`fixed w-full top-0 z-50 transition-all duration-300 ${
+        className={`fixed w-full top-0 z-50 transition-all duration-300 mb-10 ${
           scrolled ? "bg-white shadow-md py-2" : "bg-white/90 py-4"
         }`}
       >
@@ -74,7 +74,6 @@ const Navbar = () => {
                 { name: "الإجازات", path: "/ijazat" },
                 { name: "الدورات", path: "/shop/courses" },
                 { name: "الاختبارات", path: "/exams" },
-                { name: "المعلمون", path: "/teachers" },
                 { name: "دوراتي", path: "/mycourses" },
                 { name: "تواصل معنا", path: "/contactus" },
               ].map((item) => (
@@ -148,7 +147,6 @@ const Navbar = () => {
                   { name: "الإجازات", path: "/ijazat" },
                   { name: "الدورات", path: "/courses" },
                   { name: "الاختبارات", path: "/exams" },
-                  { name: "المعلمون", path: "/teachers" },
                   { name: "المدونة", path: "/blog" },
                   { name: "تواصل معنا", path: "/contact" },
                 ].map((item) => (

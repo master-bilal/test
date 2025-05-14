@@ -93,6 +93,18 @@ const Contact = () => {
           alt="Illustration of person sitting in chair with laptop and decorative elements"
           className="w-full max-w-lg mx-auto"
         />
+    <div className="bg-[#FFF7F2] min-h-screen py-16 mt-16">
+      {/* Header Section */}
+      <div className="max-w-5xl mx-auto px-6 mb-12">
+        <div className="relative text-center">
+          <div className="absolute inset-x-0 top-1/2 transform -translate-y-1/2 border-b-2 border-[#f8e5d7]"></div>
+          <h1 className="relative inline-block px-8 bg-[#FFF7F2] text-4xl font-bold text-[#AA1313]">
+            اتصل بنا
+          </h1>
+        </div>
+        <p className="text-center mt-6 text-gray-600 max-w-2xl mx-auto">
+          نحن هنا للإجابة على استفساراتك واستقبال ملاحظاتك
+        </p>
       </div>
 
       {/* Right side with form */}

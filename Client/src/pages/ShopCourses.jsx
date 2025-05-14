@@ -35,7 +35,7 @@ const ShopCourses = () => {
   );
 
   return (
-    <div className="bg-white min-h-screen" dir="rtl">
+    <div className="bg-white mt-[6rem] " dir="rtl">
       {/* Header Section */}
       <div className="bg-green-600 text-white py-12 px-6">
         <div className="container mx-auto text-center">
