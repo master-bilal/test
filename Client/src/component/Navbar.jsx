@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, User, LogOut } from "lucide-react"; // Added User and LogOut icons
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import Image from "../images/Logo.png";
@@ -48,6 +48,14 @@ const Navbar = () => {
       >
         <style>{`
           @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap');
+          
+          .icon-btn {
+            transition: all 0.3s ease;
+          }
+          
+          .icon-btn:hover {
+            transform: scale(1.1);
+          }
         `}</style>
 
         <div
@@ -70,11 +78,11 @@ const Navbar = () => {
             <ul className="flex">
               {[
                 { name: "الرئيسية", path: "/" },
-                { name: "عن الدار", path: "/aboutus" },
+                { name: "دوراتي", path: "/mycourses" },
                 { name: "الإجازات", path: "/ijazat" },
                 { name: "الدورات", path: "/shop/courses" },
                 { name: "الاختبارات", path: "/exams" },
-                { name: "دوراتي", path: "/mycourses" },
+                { name: "عن المنصة", path: "/aboutus" },
                 { name: "تواصل معنا", path: "/contactus" },
               ].map((item) => (
                 <li key={item.name} className="mx-4">
@@ -90,20 +98,22 @@ const Navbar = () => {
           </nav>
 
           {/* أزرار تسجيل الدخول/الخروج */}
-          <div className="hidden md:flex items-center">
+          <div className="hidden md:flex items-center gap-3">
             {isLoggedIn ? (
               <>
                 <Link
                   to="/profile"
-                  className="mx-2 px-4 py-2 text-green-600 font-medium border-2 border-green-600 rounded-md hover:bg-green-600 hover:text-white transition-colors duration-300"
+                  className="icon-btn flex items-center justify-center w-10 h-10 text-green-600 bg-white border-2 border-green-600 rounded-full hover:bg-green-600 hover:text-white transition-colors duration-300"
+                  title="الملف الشخصي"
                 >
-                  الملف الشخصي
+                  <User size={20} />
                 </Link>
                 <button
                   onClick={handleLogout}
-                  className="mx-2 px-4 py-2 text-white font-medium bg-red-600 border-2 border-red-600 rounded-md hover:bg-red-700 transition-colors duration-300"
+                  className="icon-btn flex items-center justify-center w-10 h-10 text-white bg-red-600 border-2 border-red-600 rounded-full hover:bg-red-700 transition-colors duration-300"
+                  title="تسجيل الخروج"
                 >
-                  تسجيل الخروج
+                  <LogOut size={20} />
                 </button>
               </>
             ) : (
@@ -160,33 +170,35 @@ const Navbar = () => {
                   </li>
                 ))}
 
-                <div className="flex flex-col pt-3 border-t border-gray-200">
+                <div className="flex justify-center gap-3 pt-3 border-t border-gray-200">
                   {isLoggedIn ? (
                     <>
                       <Link
                         to="/profile"
-                        className="py-2 my-1 text-center text-green-600 font-medium border-2 border-green-600 rounded-md hover:bg-green-600 hover:text-white transition-colors duration-300"
+                        className="icon-btn flex items-center justify-center w-12 h-12 text-green-600 bg-white border-2 border-green-600 rounded-full hover:bg-green-600 hover:text-white transition-colors duration-300"
+                        title="الملف الشخصي"
                       >
-                        الملف الشخصي
+                        <User size={24} />
                       </Link>
                       <button
                         onClick={handleLogout}
-                        className="py-2 my-1 text-center text-white font-medium bg-red-600 border-2 border-red-600 rounded-md hover:bg-red-700 transition-colors duration-300"
+                        className="icon-btn flex items-center justify-center w-12 h-12 text-white bg-red-600 border-2 border-red-600 rounded-full hover:bg-red-700 transition-colors duration-300"
+                        title="تسجيل الخروج"
                       >
-                        تسجيل الخروج
+                        <LogOut size={24} />
                       </button>
                     </>
                   ) : (
                     <>
                       <Link
                         to="/login"
-                        className="py-2 my-1 text-center text-green-600 font-medium border-2 border-green-600 rounded-md hover:bg-green-600 hover:text-white transition-colors duration-300"
+                        className="py-2 px-4 text-center text-green-600 font-medium border-2 border-green-600 rounded-md hover:bg-green-600 hover:text-white transition-colors duration-300"
                       >
                         تسجيل الدخول
                       </Link>
                       <Link
                         to="/signup"
-                        className="py-2 my-1 text-center text-white font-medium bg-green-600 border-2 border-green-600 rounded-md hover:bg-green-700 transition-colors duration-300"
+                        className="py-2 px-4 text-center text-white font-medium bg-green-600 border-2 border-green-600 rounded-md hover:bg-green-700 transition-colors duration-300"
                       >
                         التسجيل
                       </Link>
