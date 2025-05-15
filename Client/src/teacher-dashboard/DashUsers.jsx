@@ -22,10 +22,11 @@ const DashUsers = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [roleFilter, setRoleFilter] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
-const [selectedUser, setSelectedUser] = useState({
-  courses: [],
-  Certificate: [],
-});  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState({
+    courses: [],
+    Certificate: [],
+  });
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const limit = 10;
 
@@ -36,7 +37,9 @@ const [selectedUser, setSelectedUser] = useState({
 
   const fetchStats = async () => {
     try {
-      const response = await axios.get("/api/admin/users/stats");
+      const response = await axios.get(
+        "http://localhost:5000/api/admin/users/stats"
+      );
       setStats(response.data);
       console.log(response.data); // Check the structure here
     } catch (error) {
@@ -47,15 +50,18 @@ const [selectedUser, setSelectedUser] = useState({
   const fetchUsers = async () => {
     setLoading(true);
     try {
-      const response = await axios.get("/api/admin/users", {
-        params: {
-          page: currentPage,
-          limit,
-          search: searchTerm,
-          role: roleFilter,
-          status: statusFilter,
-        },
-      });
+      const response = await axios.get(
+        "http://localhost:5000/api/admin/users",
+        {
+          params: {
+            page: currentPage,
+            limit,
+            search: searchTerm,
+            role: roleFilter,
+            status: statusFilter,
+          },
+        }
+      );
       setUsers(response.data.users);
       setTotalPages(response.data.totalPages);
     } catch (error) {
@@ -67,7 +73,9 @@ const [selectedUser, setSelectedUser] = useState({
 
   const handleUserClick = async (userId) => {
     try {
-      const response = await axios.get(`/api/admin/users/${userId}`);
+      const response = await axios.get(
+        `http://localhost:5000/api/admin/users/${userId}`
+      );
       setSelectedUser(response.data);
       setIsModalOpen(true);
     } catch (error) {
@@ -77,7 +85,9 @@ const [selectedUser, setSelectedUser] = useState({
 
   const updateUserRole = async (userId, newRole) => {
     try {
-      await axios.patch(`/api/admin/users/${userId}`, { role: newRole });
+      await axios.patch(`http://localhost:5000/api/admin/users/${userId}`, {
+        role: newRole,
+      });
       fetchUsers();
       fetchStats();
     } catch (error) {
@@ -87,7 +97,9 @@ const [selectedUser, setSelectedUser] = useState({
 
   const toggleUserStatus = async (userId, currentStatus) => {
     try {
-      await axios.patch(`/api/admin/users/${userId}`, { isdeleted: !currentStatus });
+      await axios.patch(`http://localhost:5000/api/admin/users/${userId}`, {
+        isdeleted: !currentStatus,
+      });
       fetchUsers();
       fetchStats();
     } catch (error) {
@@ -124,7 +136,7 @@ const [selectedUser, setSelectedUser] = useState({
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="ml-64 px-8 py-8 w-full">
       <h1 className="text-3xl font-bold text-gray-800 mb-8">
         User Management Dashboard
       </h1>

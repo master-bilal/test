@@ -175,7 +175,7 @@ export default function Profile() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-white">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 to-white mt-16">
       <ToastContainer
         position="top-left"
         autoClose={5000}

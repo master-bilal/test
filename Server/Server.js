@@ -11,8 +11,10 @@ const courseRoutes = require("./routes/courseRoutes");
 const contactRoutes = require("./routes/contactRoutes");
 const videoRoutes = require("./routes/videoRoutes");
 const shopRoutes = require("./routes/shopRoutes");
-const myCoursesRoutes = require("./routes/myCoursesRoutes")
-const availabilityTeacher = require("./routes/availabilityTeacherRoutes")
+const myCoursesRoutes = require("./routes/myCoursesRoutes");
+const availabilityTeacher = require("./routes/availabilityTeacherRoutes");
+const quizRoutes = require("./routes/quizRoutes");
+
 const app = express();
 
 connectDB();
@@ -39,10 +41,11 @@ app.use("/api/admin/users", adminuser);
 app.use("/api/courses", courseRoutes);
 app.use("/api", videoRoutes);
 app.use("/api", contactRoutes);
-app.use("/api/shop",shopRoutes);
+app.use("/api/shop", shopRoutes);
 app.use("/api/payment", require("./routes/paymentRoutes"));
 app.use("/api/my-courses", myCoursesRoutes);
 app.use("/api/teacher", availabilityTeacher);
+app.use("/api/quiz", quizRoutes);
 
 // app.use("/api/videos", videoRoutes);
 
