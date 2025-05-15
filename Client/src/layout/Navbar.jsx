@@ -1,29 +1,20 @@
-import { useState, useEffect } from "react";
-import { Menu, X, User, LogOut } from "lucide-react"; // Added User and LogOut icons
+import { useState, useEffect, useContext } from "react";
+import { Menu, X, User, LogOut } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import Image from "../images/Logo.png";
+import { UserContext } from "../context/UserContext";
 
 // مكون وهمي لتعويض مساحة الناف بار
 export const NavbarSpacer = () => {
   return <div className="h-16 md:h-20"></div>;
 };
 
-// المكون الرئيسي للناف بار
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const token = Cookies.get("token");
-    if (token && token.trim() !== "") {
-      setIsLoggedIn(true);
-    } else {
-      setIsLoggedIn(false);
-    }
-  }, []);
+  const { isLoggedIn, logout } = useContext(UserContext); // ← Use context instead of local state
 
   useEffect(() => {
     const handleScroll = () => {
@@ -34,9 +25,9 @@ const Navbar = () => {
   }, []);
 
   const handleLogout = () => {
-    Cookies.remove("token");
-    setIsLoggedIn(false);
-    navigate("/");
+    Cookies.remove("token"); // ← Optional: remove token cookie if used
+    logout(); // ← Context logout
+    navigate("/"); // ← Redirect to home
   };
 
   return (
@@ -48,11 +39,11 @@ const Navbar = () => {
       >
         <style>{`
           @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap');
-          
+
           .icon-btn {
             transition: all 0.3s ease;
           }
-          
+
           .icon-btn:hover {
             transform: scale(1.1);
           }
@@ -124,12 +115,6 @@ const Navbar = () => {
                 >
                   تسجيل الدخول
                 </Link>
-                <Link
-                  to="/signup"
-                  className="mx-2 px-4 py-2 text-white font-medium bg-green-600 border-2 border-green-600 rounded-md hover:bg-green-700 transition-colors duration-300"
-                >
-                  التسجيل
-                </Link>
               </>
             )}
           </div>
@@ -196,12 +181,6 @@ const Navbar = () => {
                       >
                         تسجيل الدخول
                       </Link>
-                      <Link
-                        to="/signup"
-                        className="py-2 px-4 text-center text-white font-medium bg-green-600 border-2 border-green-600 rounded-md hover:bg-green-700 transition-colors duration-300"
-                      >
-                        التسجيل
-                      </Link>
                     </>
                   )}
                 </div>
@@ -214,5 +193,4 @@ const Navbar = () => {
   );
 };
 
-// التصدير الرئيسي
 export default Navbar;

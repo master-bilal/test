@@ -2,7 +2,7 @@ import { FaUserFriends, FaChartBar, FaBell, FaCog } from "react-icons/fa";
 
 const DashHome = () => {
   return (
-    <div className="p-6 bg-gray-100 min-h-screen">
+    <div className="ml-64 p-6 bg-gray-100 min-h-screen">
       <h1 className="text-3xl font-bold text-gray-800 mb-6">لوحة التحكم</h1>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -39,7 +39,6 @@ const DashHome = () => {
         </div>
       </div>
 
-      {/* محتوى إضافي */}
       <div className="mt-10 bg-white shadow rounded-2xl p-6">
         <h2 className="text-2xl font-semibold mb-4 text-gray-800">
           مرحباً بك 👋

@@ -9,9 +9,9 @@ import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import Profile from "./pages/Profile";
 import Home from "./pages/Home";
-import Navbar from "./component/Navbar";
-import { NavbarSpacer } from "./component/Navbar";
-import Footer from "./component/Footer";
+import Navbar from "./layout/Navbar";
+// import { NavbarSpacer } from "./layout/Navbar";
+import Footer from "./layout/Footer";
 import Programs from "./pages/Programs";
 import Contact from "./pages/Contact";
 import Payment from "./pages/Payment";
@@ -28,6 +28,13 @@ import CourseDetails from "./pages/CourseDetails";
 import MyCourses from "./pages/MyCourses.";
 import MyCourseDetails from "./pages/MyCourseDetails";
 import AvailabilityTeacher from "./teacher-dashboard/BookingDash";
+import SuperAdminSideBar from "./admin/SuperAdminSideBar";
+import Dashboard from "./admin/Dashboard";
+import Teachers from "./admin/Teachers";
+import Students from "./admin/Students";
+import Quis from "./admin/Quis";
+import Exams from "./pages/Exams";
+
 function App() {
   const location = useLocation();
 
@@ -42,6 +49,7 @@ function App() {
         "/shop/courses",
         "/shop/courses/:id",
         "/mycourses",
+        "/exams",
       ].includes(location.pathname) && <Navbar />}
 
       {[
@@ -52,6 +60,13 @@ function App() {
         "/teacher-dashboard/TeacherCourses",
         "/teacher-dashboard/AvailabilityTeacher",
       ].includes(location.pathname) && <SideBar />}
+
+      {[
+        "/superadmin/dashboard",
+        "/superadmin/teachers",
+        "/superadmin/students",
+        "/superadmin/quiz",
+      ].includes(location.pathname) && <SuperAdminSideBar />}
 
       {/* <Navbar /> */}
 
@@ -93,6 +108,12 @@ function App() {
         />
         <Route path="/shop/courses" element={<ShopCourses />} />
         <Route path="/shop/courses/:id" element={<CourseDetails />} />
+
+        <Route path="/superadmin/dashboard" element={<Dashboard />} />
+        <Route path="/superadmin/teachers" element={<Teachers />} />
+        <Route path="/superadmin/students" element={<Students />} />
+        <Route path="/superadmin/quiz" element={<Quis />} />
+        <Route path="/exams" element={<Exams />} />
       </Routes>
       {/* </Router> */}
 
@@ -106,7 +127,7 @@ function App() {
         "/shop/courses",
         "/shop/courses/:id",
         "/",
-        "/",
+        "/exams",
       ].includes(location.pathname) && <Footer />}
     </>
   );

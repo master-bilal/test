@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -6,6 +6,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Swal from "sweetalert2";
 import { Eye, EyeOff } from "lucide-react";
+import { useContext } from "react";
+import { UserContext } from "../context/UserContext";
 
 const schema = yup.object().shape({
   email: yup
@@ -24,6 +26,8 @@ export default function Login() {
   } = useForm({
     resolver: yupResolver(schema),
   });
+
+  const { updateRole } = useContext(UserContext);
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -90,17 +94,30 @@ export default function Login() {
         "http://localhost:5000/api/users/login",
         data,
         {
-          withCredentials: true, // تأكد من إرسال الكوكيز مع الطلب
+          withCredentials: true, // Ensure cookies are sent
         }
       );
-      // console.log("bilal");
+
+      const userRole = response.data.role || "user"; // fallback to 'user'
+      updateRole(userRole); // Set role in context
+      localStorage.setItem("userRole", userRole); // Optional but recommended
+
       Swal.fire({
         icon: "success",
         title: "تم تسجيل الدخول بنجاح!",
         text: `مرحبًا بعودتك!`,
         confirmButtonText: "موافق",
       }).then(() => {
-        navigate("/");
+        switch (userRole) {
+          case "teacher":
+            navigate("/teacher-dashboard/DashHome");
+            break;
+          case "admin":
+            navigate("/superadmin/dashboard");
+            break;
+          default:
+            navigate("/");
+        }
       });
     } catch (error) {
       Swal.fire({
