@@ -3,15 +3,15 @@ import axios from "axios";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
 const PAYPAL_CLIENT_ID =
-  "AQO_lrXGFsV-gcb9dl11jWIu-BW84qeQbOxa31FnSsbeJj_fpHAMK3sb-c2aJjJSnjuaN4CDAxvT3tL1"; // ← replace with your real client id
+  "AQO_lrXGFsV-gcb9dl11jWIu-BW84qeQbOxa31FnSsbeJj_fpHAMK3sb-c2aJjJSnjuaN4CDAxvT3tL1";
 
 const Ijazeh = () => {
   const [availableSlots, setAvailableSlots] = useState([]);
   const [selectedSlot, setSelectedSlot] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [bookingMessage, setBookingMessage] = useState("");
+  const [paypalLoaded, setPaypalLoaded] = useState(false);
 
-  // Load all unbooked slots
   const fetchAvailableSlots = async () => {
     try {
       const { data } = await axios.get(
@@ -27,14 +27,15 @@ const Ijazeh = () => {
     fetchAvailableSlots();
   }, []);
 
-  // Open modal to book slot
   const openBookingModal = (slot) => {
     setSelectedSlot(slot);
     setBookingMessage("");
     setShowModal(true);
+    setPaypalLoaded(false);
+    // Small timeout to ensure modal is rendered before loading PayPal
+    setTimeout(() => setPaypalLoaded(true), 100);
   };
 
-  // After payment approval, call booking API
   const handleApprove = async (orderID) => {
     try {
       await axios.post(
@@ -115,42 +116,44 @@ const Ijazeh = () => {
             <h2 className="text-lg font-semibold mb-4 text-gray-800">
               Pay 5 USD to Book
             </h2>
-            <PayPalScriptProvider
-              key={selectedSlot?._id}
-              options={{
-                "client-id": PAYPAL_CLIENT_ID,
-                currency: "USD",
-              }}
-            >
-              <PayPalButtons
-                style={{ layout: "vertical", shape: "rect" }}
-                createOrder={(data, actions) =>
-                  actions.order.create({
-                    purchase_units: [
-                      {
-                        amount: {
-                          currency_code: "USD",
-                          value: "5.00",
+            {paypalLoaded && (
+              <PayPalScriptProvider
+                options={{
+                  "client-id": PAYPAL_CLIENT_ID,
+                  currency: "USD",
+                  components: "buttons",
+                }}
+              >
+                <PayPalButtons
+                  style={{ layout: "vertical", shape: "rect" }}
+                  createOrder={(data, actions) =>
+                    actions.order.create({
+                      purchase_units: [
+                        {
+                          amount: {
+                            currency_code: "USD",
+                            value: "5.00",
+                          },
                         },
-                      },
-                    ],
-                  })
-                }
-                onApprove={async (data, actions) => {
-                  const order = await actions.order.capture();
-                  handleApprove(order.id);
-                }}
-                onCancel={() => {
-                  setBookingMessage("Payment cancelled.");
-                  setShowModal(false);
-                }}
-                onError={(err) => {
-                  console.error("PayPal error:", err);
-                  setBookingMessage("Payment error.");
-                  setShowModal(false);
-                }}
-              />
-            </PayPalScriptProvider>
+                      ],
+                    })
+                  }
+                  onApprove={async (data, actions) => {
+                    const order = await actions.order.capture();
+                    handleApprove(order.id);
+                  }}
+                  onCancel={() => {
+                    setBookingMessage("Payment cancelled.");
+                    setShowModal(false);
+                  }}
+                  onError={(err) => {
+                    console.error("PayPal error:", err);
+                    setBookingMessage("Payment error.");
+                    setShowModal(false);
+                  }}
+                />
+              </PayPalScriptProvider>
+            )}
             <button
               onClick={() => setShowModal(false)}
               className="mt-4 w-full text-center text-gray-600 hover:text-gray-800"
