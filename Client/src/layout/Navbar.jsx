@@ -69,7 +69,6 @@ const Navbar = () => {
             <ul className="flex">
               {[
                 { name: "الرئيسية", path: "/" },
-                { name: "دوراتي", path: "/mycourses" },
                 { name: "الإجازات", path: "/ijazat" },
                 { name: "الدورات", path: "/shop/courses" },
                 { name: "الاختبارات", path: "/exams" },

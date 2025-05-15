@@ -34,6 +34,7 @@ import Teachers from "./admin/Teachers";
 import Students from "./admin/Students";
 import Quis from "./admin/Quis";
 import Exams from "./pages/Exams";
+import Ijazeh from "./pages/Ijazeh";
 
 function App() {
   const location = useLocation();
@@ -50,6 +51,7 @@ function App() {
         "/shop/courses/:id",
         "/mycourses",
         "/exams",
+        "/ijazat",
       ].includes(location.pathname) && <Navbar />}
 
       {[
@@ -114,6 +116,7 @@ function App() {
         <Route path="/superadmin/students" element={<Students />} />
         <Route path="/superadmin/quiz" element={<Quis />} />
         <Route path="/exams" element={<Exams />} />
+        <Route path="/ijazat" element={<Ijazeh />} />
       </Routes>
       {/* </Router> */}
 
@@ -126,7 +129,7 @@ function App() {
         "/profile",
         "/shop/courses",
         "/shop/courses/:id",
-        "/",
+        "/ijazat",
         "/exams",
       ].includes(location.pathname) && <Footer />}
     </>
