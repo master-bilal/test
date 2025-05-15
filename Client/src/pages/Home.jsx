@@ -6,6 +6,8 @@ import {
   Users,
   ChevronDown,
 } from "lucide-react";
+import { Link } from "react-router-dom";
+
 import { useState, useEffect } from "react";
 import image from "../images/with construction.jpg";
 
@@ -61,9 +63,10 @@ const Home = () => {
             </p>
 
             {/* Subscribe/Join Button */}
-            <button className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 px-8 rounded-md text-lg transition duration-300 mt-4">
-              اشترك الآن
-            </button>
+            <Link to="/login">
+            <button className="bg-green-600 hover:bg-white hover:text-green-600 text-white font-bold py-3 px-8 rounded-md text-lg transition duration-300 mt-4">
+              سجل الآن{" "}
+            </button></Link>
 
             {/* Stats Section */}
             <div className="absolute bottom-10 left-0 right-0">
