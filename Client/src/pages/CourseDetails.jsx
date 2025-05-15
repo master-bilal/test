@@ -9,6 +9,7 @@ import {
   FaClock,
   FaCalendarAlt,
 } from "react-icons/fa";
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
 const CourseDetails = () => {
   const { id } = useParams();
@@ -34,59 +35,57 @@ const CourseDetails = () => {
 
     fetchCourseDetails();
   }, [id]);
-useEffect(() => {
-  if (window.paypal && course) {
-    window.paypal
-      .Buttons({
-        createOrder: (data, actions) => {
-          return actions.order.create({
-            purchase_units: [
-              {
-                amount: {
-                  value: course.price.toString(), // تأكد أن السعر هو رقم كنص
-                  currency_code: "USD",
+  useEffect(() => {
+    if (window.paypal && course) {
+      window.paypal
+        .Buttons({
+          createOrder: (data, actions) => {
+            return actions.order.create({
+              purchase_units: [
+                {
+                  amount: {
+                    value: course.price.toString(), // تأكد أن السعر هو رقم كنص
+                    currency_code: "USD",
+                  },
+                  description: course.courseTitle,
                 },
-                description: course.courseTitle,
-              },
-            ],
-          });
-        },
-        onApprove: async (data, actions) => {
-          try {
-            const details = await actions.order.capture();
-            alert("تم الدفع بنجاح");
-
-            const response = await axios.post(
-              "http://localhost:5000/api/payment",
-             {
-            withCredentials: true,
-            // headers: { "Content-Type": "application/json" },
+              ],
+            });
           },
-              {
-                courseId: course._id,
-                courseTitle: course.courseTitle,
-                amount: course.price,
-                orderId: data.orderID,
-                paymentDetails: details,
-              }
-            );
+          onApprove: async (data, actions) => {
+            try {
+              const details = await actions.order.capture();
+              alert("تم الدفع بنجاح");
 
-            console.log("✅ بيانات الدفع المحفوظة:", response.data);
-          } catch (error) {
-            console.error(
-              "❌ خطأ أثناء حفظ الدفع:",
-              error.response?.data || error.message
-            );
-          }
+              const response = await axios.post(
+                "http://localhost:5000/api/payment",
+                {
+                  withCredentials: true,
+                  // headers: { "Content-Type": "application/json" },
+                },
+                {
+                  courseId: course._id,
+                  courseTitle: course.courseTitle,
+                  amount: course.price,
+                  orderId: data.orderID,
+                  paymentDetails: details,
+                }
+              );
 
-          // يمكنك التحديث بعد الدفع أو توجيه المستخدم
-        },
-      })
-      .render("#paypal-button");
-  }
-}, [course]);
+              console.log("✅ بيانات الدفع المحفوظة:", response.data);
+            } catch (error) {
+              console.error(
+                "❌ خطأ أثناء حفظ الدفع:",
+                error.response?.data || error.message
+              );
+            }
 
-
+            // يمكنك التحديث بعد الدفع أو توجيه المستخدم
+          },
+        })
+        .render("#paypal-button");
+    }
+  }, [course]);
 
   const handlePayPalSuccess = (details, data) => {
     alert("تمت عملية الدفع بنجاح!");
@@ -300,9 +299,62 @@ useEffect(() => {
               </div>
 
               {/* PayPal Button */}
-              <div id="paypal-button-container">
-                <div id="paypal-button"></div>
-              </div>
+              <PayPalScriptProvider
+                options={{
+                  "client-id":
+                    "AQO_lrXGFsV-gcb9dl11jWIu-BW84qeQbOxa31FnSsbeJj_fpHAMK3sb-c2aJjJSnjuaN4CDAxvT3tL1",
+                  currency: "USD",
+                }}
+              >
+                <PayPalButtons
+                  style={{
+                    layout: "vertical",
+                    color: "gold",
+                    shape: "rect",
+                    label: "paypal",
+                  }}
+                  createOrder={(data, actions) => {
+                    return actions.order.create({
+                      purchase_units: [
+                        {
+                          amount: {
+                            value: course.price.toString(),
+                            currency_code: "USD",
+                          },
+                          description: course.courseTitle,
+                        },
+                      ],
+                    });
+                  }}
+                  onApprove={async (data, actions) => {
+                    const details = await actions.order.capture();
+                    alert("تم الدفع بنجاح");
+
+                    try {
+                      const response = await axios.post(
+                        "http://localhost:5000/api/payment",
+                        {
+                          courseId: course._id,
+                          courseTitle: course.courseTitle,
+                          amount: course.price,
+                          orderId: data.orderID,
+                          paymentDetails: details,
+                        },
+                        { withCredentials: true }
+                      );
+                      console.log("✅ بيانات الدفع المحفوظة:", response.data);
+                    } catch (error) {
+                      console.error(
+                        "❌ خطأ أثناء حفظ الدفع:",
+                        error.response?.data || error.message
+                      );
+                    }
+                  }}
+                  onError={(err) => {
+                    console.error("❌ PayPal Error:", err);
+                  }}
+                />
+              </PayPalScriptProvider>
 
               {/* Purchase Button */}
               <button className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300">

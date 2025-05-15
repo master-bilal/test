@@ -4,6 +4,8 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import Booking from "../component/profile/Boking";
+
 export default function Profile() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -326,6 +328,7 @@ export default function Profile() {
           </div>
         </div>
       </div>
+      <Booking />
     </div>
   );
 }
