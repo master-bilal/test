@@ -34,7 +34,6 @@ import Teachers from "./admin/Teachers";
 import Students from "./admin/Students";
 import Quis from "./admin/Quis";
 import Exams from "./pages/Exams";
-
 function App() {
   const location = useLocation();
 
@@ -114,6 +113,8 @@ function App() {
         <Route path="/superadmin/students" element={<Students />} />
         <Route path="/superadmin/quiz" element={<Quis />} />
         <Route path="/exams" element={<Exams />} />
+        
+        
       </Routes>
       {/* </Router> */}
 
