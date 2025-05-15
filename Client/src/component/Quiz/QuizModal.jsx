@@ -64,33 +64,48 @@ const QuizModal = ({ quizId, onClose }) => {
     }
   };
 
-  const modalVariants = {
-    hidden: { opacity: 0, scale: 0.9 },
-    visible: { opacity: 1, scale: 1 },
-    exit: { opacity: 0, scale: 0.9 },
-  };
-
   const overlayVariants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1 },
+    hidden: { opacity: 0, backdropFilter: "blur(0px)" },
+    visible: {
+      opacity: 1,
+      backdropFilter: "blur(8px)",
+      transition: { duration: 0.3 },
+    },
+    exit: { opacity: 0, backdropFilter: "blur(0px)" },
   };
 
-  if (!quizId) return null;
+  const modalVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring",
+        damping: 25,
+        stiffness: 500,
+      },
+    },
+    exit: { opacity: 0, y: 20 },
+  };
 
   return (
     <AnimatePresence>
       <motion.div
-        className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+        className="fixed inset-0 flex items-center justify-center z-50 p-4"
         variants={overlayVariants}
         initial="hidden"
         animate="visible"
         exit="hidden"
       >
+        {/* طبقة White Blur */}
+        <div className="absolute inset-0 bg-white/30 backdrop-blur-xl"></div>
+
+        {/* النافذة المنبثقة */}
         <motion.div
-          className="bg-white rounded-xl shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto"
+          className="relative bg-white rounded-xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto border border-white/20"
           variants={modalVariants}
         >
-          <div className="sticky top-0 bg-white p-4 border-b border-gray-200 flex justify-between items-center z-10">
+          <div className="sticky top-0 bg-white/90 backdrop-blur-sm p-4 border-b border-gray-200 flex justify-between items-center z-10">
             <h2 className="text-xl font-semibold text-gray-800">
               {quiz?.title || "الاختبار"}
             </h2>
@@ -139,7 +154,7 @@ const QuizModal = ({ quizId, onClose }) => {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: qIdx * 0.05 }}
-                    className="p-4 bg-gray-50 rounded-lg"
+                    className="p-4 bg-gray-50 rounded-lg backdrop-blur-sm"
                   >
                     <p className="font-medium text-lg text-gray-800 mb-3">
                       {qIdx + 1}. {q.questionText}

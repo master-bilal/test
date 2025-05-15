@@ -22,7 +22,6 @@ const Quis = () => {
       });
   }, []);
 
-  // حركة ظهور العناصر
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -45,6 +44,7 @@ const Quis = () => {
   };
 
   return (
+    <div className=" text-right" dir="rtl">
     <div className="min-h-screen bg-gray-50 p-8 mt-20">
       <div className="max-w-6xl mx-auto">
         <motion.div
@@ -86,7 +86,7 @@ const Quis = () => {
                 key={quiz._id}
                 variants={itemVariants}
                 whileHover={{ y: -5 }}
-                className="bg-white rounded-xl shadow-md overflow-hidden border border-green-100 hover:shadow-lg transition-shadow"
+                className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200 hover:shadow-lg transition-shadow"
               >
                 <div className="p-6">
                   <div className="flex items-start">
@@ -123,6 +123,7 @@ const Quis = () => {
           />
         )}
       </div>
+    </div>
     </div>
   );
 };

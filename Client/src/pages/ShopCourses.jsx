@@ -1,4 +1,3 @@
-// src/pages/Courses.jsx
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -8,7 +7,12 @@ import {
   FaBook,
   FaMoneyBillWave,
   FaSearch,
+  FaStar,
+  FaClock,
+  FaUsers,
 } from "react-icons/fa";
+import { motion } from "framer-motion";
+import image from "../images/Elearning_platform.jpg";
 
 const ShopCourses = () => {
   const [courses, setCourses] = useState([]);
@@ -20,7 +24,6 @@ const ShopCourses = () => {
     axios
       .get("http://localhost:5000/api/shop/courses")
       .then((res) => {
-        console.log("Courses from backend:", res.data);
         setCourses(res.data);
         setIsLoading(false);
       })
@@ -34,189 +37,336 @@ const ShopCourses = () => {
     course.courseTitle.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  // حركات الأنيميشن
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.5,
+      },
+    },
+  };
+
   return (
-    <div className="bg-white mt-[6rem] " dir="rtl">
-      {/* Header Section */}
-      <div className="bg-green-600 text-white py-12 px-6">
+    <div className="bg-white mt-[6rem]" dir="rtl">
+      {/* مقدمة الصفحة مع أنيميشن */}
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="bg-gradient-to-r from-green-600 to-green-800 text-white py-16 px-6"
+      >
         <div className="container mx-auto text-center">
-          <h1 className="text-4xl font-bold mb-4">منصة التعلم الإلكترونية</h1>
-          <p className="text-xl mb-8">
-            ابدأ رحلة التعلم معنا واكتشف مجموعة متنوعة من الكورسات عالية الجودة
-          </p>
-          <div className="relative max-w-lg mx-auto">
+          <motion.h1
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+            className="text-4xl md:text-5xl font-bold mb-6"
+          >
+            اكتشف عالم المعرفة مع كورساتنا
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4 }}
+            className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto"
+          >
+            دورات تعليمية عالية الجودة تقدمها نخبة من الخبراء لتطوير مهاراتك
+          </motion.p>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.6 }}
+            className="relative max-w-xl mx-auto"
+          >
             <input
               type="text"
-              placeholder="ابحث عن كورس..."
-              className="w-full py-3 px-4 pr-12 rounded-full text-green-800 font-medium border-2 border-white focus:outline-none focus:border-green-300"
+              placeholder="ابحث عن الكورس الذي تريده..."
+              className="w-full py-4 px-6 rounded-full shadow-lg bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-green-400"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
-            <div className="absolute left-4 top-3 text-green-600">
-              <FaSearch size={24} />
-            </div>
-          </div>
+            <FaSearch className="absolute left-6 top-1/2 transform -translate-y-1/2 text-gray-500 text-xl" />
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
 
-      {/* Introduction Section */}
-      <div className="container mx-auto py-12 px-6">
-        <div className="bg-green-50 rounded-lg p-8 shadow-md">
-          <div className="flex flex-col md:flex-row items-center">
-            <div className="md:w-1/2 mb-6 md:mb-0">
-              <img
-                src="/api/placeholder/600/400"
-                alt="تعلم إلكتروني"
-                className="rounded-lg shadow-md"
-              />
-            </div>
-            <div className="md:w-1/2 md:pr-8">
-              <h2 className="text-3xl font-bold text-green-700 mb-4">
-                لماذا تختار كورساتنا؟
-              </h2>
-              <div className="space-y-4">
-                <div className="flex items-center">
-                  <div className="bg-green-600 p-3 rounded-full text-white mr-4">
-                    <FaGraduationCap size={20} />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-xl text-green-800">
-                      محتوى تعليمي عالي الجودة
-                    </h3>
-                    <p className="text-gray-600">
-                      دروس مصممة بعناية من قبل مختصين في المجال
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-center">
-                  <div className="bg-green-600 p-3 rounded-full text-white mr-4">
-                    <FaUser size={20} />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-xl text-green-800">
-                      أساتذة خبراء
-                    </h3>
-                    <p className="text-gray-600">
-                      يقدم المحتوى نخبة من الأساتذة ذوي الخبرة العالية
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-center">
-                  <div className="bg-green-600 p-3 rounded-full text-white mr-4">
-                    <FaBook size={20} />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-xl text-green-800">
-                      تعلم بسرعتك الخاصة
-                    </h3>
-                    <p className="text-gray-600">
-                      الوصول الكامل إلى المحتوى في أي وقت ومن أي مكان
-                    </p>
-                  </div>
-                </div>
+      {/* لماذا نختارنا */}
+      <motion.section
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        className="py-16 bg-gray-50"
+      >
+        <div className="container mx-auto px-6">
+          <motion.div
+            className="bg-white rounded-2xl shadow-xl overflow-hidden"
+            whileHover={{ scale: 1.01 }}
+            transition={{ duration: 0.3 }}
+          >
+            <div className="flex flex-col md:flex-row">
+              <div className="md:w-1/2 p-8 md:p-12">
+                <motion.h2
+                  className="text-3xl font-bold text-green-700 mb-6"
+                  initial={{ x: -20, opacity: 0 }}
+                  whileInView={{ x: 0, opacity: 1 }}
+                  transition={{ delay: 0.2 }}
+                >
+                  لماذا تختار منصتنا؟
+                </motion.h2>
+
+                <motion.div
+                  className="space-y-6"
+                  variants={containerVariants}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                >
+                  <motion.div
+                    className="flex items-start"
+                    variants={itemVariants}
+                  >
+                    <div className="bg-green-100 p-3 rounded-full text-green-600 mr-4">
+                      <FaGraduationCap size={20} />
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-xl text-gray-800 mb-2">
+                        جودة عالية
+                      </h3>
+                      <p className="text-gray-600">
+                        محتوى تعليمي معتمد ومحدث باستمرار من قبل خبراء متخصصين
+                      </p>
+                    </div>
+                  </motion.div>
+
+                  <motion.div
+                    className="flex items-start"
+                    variants={itemVariants}
+                  >
+                    <div className="bg-green-100 p-3 rounded-full text-green-600 mr-4">
+                      <FaClock size={20} />
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-xl text-gray-800 mb-2">
+                        مرونة في التعلم
+                      </h3>
+                      <p className="text-gray-600">
+                        تعلم في أي وقت ومن أي مكان حسب جدولك الخاص
+                      </p>
+                    </div>
+                  </motion.div>
+
+                  <motion.div
+                    className="flex items-start"
+                    variants={itemVariants}
+                  >
+                    <div className="bg-green-100 p-3 rounded-full text-green-600 mr-4">
+                      <FaUsers size={20} />
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-xl text-gray-800 mb-2">
+                        مجتمع تعليمي
+                      </h3>
+                      <p className="text-gray-600">
+                        انضم إلى مجتمع من المتعلمين وشارك في المناقشات
+                      </p>
+                    </div>
+                  </motion.div>
+                </motion.div>
+              </div>
+
+              <div className="md:w-1/2">
+                <motion.img
+                  src={image}
+                  alt="التعلم الإلكتروني"
+                  className="w-full h-full object-cover"
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  transition={{ delay: 0.4 }}
+                />
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
-      </div>
+      </motion.section>
 
-      {/* Courses Section */}
-      <div className="container mx-auto py-12 px-6">
-        <div className="flex justify-between items-center mb-8">
-          <h2 className="text-3xl font-bold text-green-700">
-            <span className="border-b-4 border-green-500 pb-2">
-              جميع الكورسات
-            </span>
-          </h2>
-          <p className="text-green-600 font-medium">
-            {filteredCourses.length} كورس متاح
-          </p>
-        </div>
-
-        {isLoading ? (
-          <div className="flex justify-center items-center h-64">
-            <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-green-600"></div>
-          </div>
-        ) : filteredCourses.length === 0 ? (
-          <div className="text-center py-12">
-            <FaBook className="mx-auto text-green-300" size={64} />
-            <h3 className="text-2xl font-bold text-gray-600 mt-4">
-              لا توجد كورسات متاحة
-            </h3>
-            <p className="text-gray-500">
-              يرجى المحاولة مرة أخرى لاحقاً أو تغيير معايير البحث
+      {/* قسم الكورسات */}
+      <section className="py-16">
+        <div className="container mx-auto px-6">
+          <motion.div
+            className="flex justify-between items-center mb-12"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-3xl font-bold text-green-700 relative">
+              <span className="relative inline-block">
+                الكورسات المتاحة
+                <span className="absolute bottom-0 left-0 w-full h-1 bg-green-500"></span>
+              </span>
+            </h2>
+            <p className="text-green-600 font-medium bg-green-100 px-4 py-2 rounded-full">
+              {filteredCourses.length} كورس متاح
             </p>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredCourses.map((course) => (
-              <Link
-                to={`/shop/courses/${course._id}`}
-                key={course._id}
-                className="block"
+          </motion.div>
+
+          {isLoading ? (
+            <div className="flex justify-center items-center h-64">
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
+                className="rounded-full h-16 w-16 border-t-2 border-b-2 border-green-600"
+              ></motion.div>
+            </div>
+          ) : filteredCourses.length === 0 ? (
+            <motion.div
+              className="text-center py-16"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+            >
+              <FaBook className="mx-auto text-green-300 text-6xl mb-4" />
+              <h3 className="text-2xl font-bold text-gray-600 mb-2">
+                لا توجد كورسات متاحة
+              </h3>
+              <p className="text-gray-500 mb-6">
+                لم يتم العثور على كورسات تطابق بحثك
+              </p>
+              <button
+                className="bg-green-600 text-white px-6 py-2 rounded-full hover:bg-green-700 transition-colors"
+                onClick={() => setSearchTerm("")}
               >
-                <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden transform hover:-translate-y-1">
-                  <div className="relative">
-                    <img
-                      src={`http://localhost:5000/${course.coursePicture}`}
-                      alt={course.courseTitle}
-                      className="w-full h-52 object-cover"
-                      onError={(e) => {
-                        e.target.onerror = null;
-                        e.target.src = "/api/placeholder/400/250";
-                      }}
-                    />
-                    <div className="absolute top-4 left-4 bg-green-600 text-white px-3 py-1 rounded-full text-sm font-bold">
-                      {course.price} دينار
+                عرض جميع الكورسات
+              </button>
+            </motion.div>
+          ) : (
+            <motion.div
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+            >
+              {filteredCourses.map((course) => (
+                <motion.div
+                  key={course._id}
+                  variants={itemVariants}
+                  whileHover={{ y: -5 }}
+                  className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-all"
+                >
+                  <Link to={`/shop/courses/${course._id}`} className="block">
+                    <div className="relative">
+                      <motion.img
+                        src={`http://localhost:5000/${course.coursePicture}`}
+                        alt={course.courseTitle}
+                        className="w-full h-56 object-cover"
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src = "/images/course-placeholder.jpg";
+                        }}
+                      />
+                      <motion.div
+                        className="absolute top-4 left-4 bg-green-600 text-white px-3 py-1 rounded-full text-sm font-bold flex items-center"
+                        whileHover={{ scale: 1.05 }}
+                      >
+                        <FaMoneyBillWave className="ml-1" />
+                        {course.price} دينار
+                      </motion.div>
                     </div>
-                  </div>
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold text-green-800 mb-2">
-                      {course.courseTitle}
-                    </h3>
-                    <p className="text-gray-600 mb-4 line-clamp-2">
-                      {course.courseDescription || "لا يوجد وصف لهذا الكورس"}
-                    </p>
-                    <div className="flex items-center justify-between pt-4 border-t border-gray-100">
-                      <div className="flex items-center">
-                        <FaUser className="text-green-600 mr-2" />
-                        <span className="text-sm text-gray-600">
-                          {course.teacher?.username || "مدرس غير معروف"}
-                        </span>
+                    <div className="p-6">
+                      <h3 className="text-xl font-bold text-gray-800 mb-2 hover:text-green-600 transition-colors">
+                        {course.courseTitle}
+                      </h3>
+                      <p className="text-gray-600 mb-4 line-clamp-2">
+                        {course.courseDescription || "لا يوجد وصف لهذا الكورس"}
+                      </p>
+                      <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                        <div className="flex items-center">
+                          <FaUser className="text-green-600 mr-2" />
+                          <span className="text-sm text-gray-600">
+                            {course.teacher?.username || "مدرس غير معروف"}
+                          </span>
+                        </div>
                       </div>
-                      <span className="bg-green-100 text-green-800 text-xs font-medium px-3 py-1 rounded-full">
-                        تفاصيل الكورس
-                      </span>
                     </div>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-        )}
-      </div>
-
-      {/* Call to Action */}
-      <div className="bg-green-600 text-white py-12 px-6">
-        <div className="container mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-4">
-            ابدأ رحلتك التعليمية اليوم
-          </h2>
-          <p className="text-xl mb-8 max-w-2xl mx-auto">
-            انضم إلى آلاف الطلاب الذين يطورون مهاراتهم من خلال منصتنا التعليمية
-          </p>
-          <button className="bg-white text-green-600 font-bold py-3 px-8 rounded-full shadow-lg hover:bg-green-50 transition duration-300">
-            اشترك الآن
-          </button>
+                  </Link>
+                </motion.div>
+              ))}
+            </motion.div>
+          )}
         </div>
-      </div>
+      </section>
 
-      {/* Footer */}
-      <footer className="bg-green-800 text-white py-8 px-6">
-        <div className="container mx-auto text-center">
-          <p>
-            &copy; {new Date().getFullYear()} منصة التعلم الإلكترونية. جميع
+      {/* دعوة للعمل */}
+      <motion.section
+        className="py-16 bg-gradient-to-r from-green-600 to-green-700 text-white"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+      >
+        <div className="container mx-auto px-6 text-center">
+          <motion.h2
+            className="text-3xl md:text-4xl font-bold mb-6"
+            initial={{ y: 20, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.2 }}
+          >
+            جاهز لبدء رحلتك التعليمية؟
+          </motion.h2>
+          <motion.p
+            className="text-xl mb-8 max-w-2xl mx-auto"
+            initial={{ y: 20, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.4 }}
+          >
+            انضم إلى آلاف الطلاب الذين طوروا مهاراتهم مع منصتنا التعليمية
+          </motion.p>
+          <motion.div
+            initial={{ y: 20, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.6 }}
+          >
+            <Link
+              to="/login"
+              className="inline-block bg-white text-green-600 font-bold py-3 px-8 rounded-full shadow-lg hover:bg-gray-100 transition duration-300"
+            >
+              سجل الآن مجانًا
+            </Link>
+          </motion.div>
+        </div>
+      </motion.section>
+
+      {/* تذييل الصفحة */}
+      <footer className="bg-green-900 text-white py-8">
+        <div className="container mx-auto px-6 text-center">
+          <p className="mb-4">
+            &copy; {new Date().getFullYear()} منصة التعلم الإلكتروني. جميع
             الحقوق محفوظة
           </p>
+          <div className="flex justify-center space-x-6">
+            <a href="#" className="hover:text-green-300 transition-colors">
+              الشروط والأحكام
+            </a>
+            <a href="#" className="hover:text-green-300 transition-colors">
+              سياسة الخصوصية
+            </a>
+            <a href="#" className="hover:text-green-300 transition-colors">
+              اتصل بنا
+            </a>
+          </div>
         </div>
       </footer>
     </div>
