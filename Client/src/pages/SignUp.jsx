@@ -6,8 +6,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Swal from "sweetalert2";
 import { Eye, EyeOff, CheckCircle2 } from "lucide-react";
-import { GoogleLogin } from "@react-oauth/google";
-import { jwtDecode } from "jwt-decode";
+import { useContext } from "react";
+import { UserContext } from "../context/UserContext";
 
 // تعريف الـ schema باستخدام Yup
 const schema = yup.object().shape({
@@ -34,6 +34,7 @@ export default function Register() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const { updateRole } = useContext(UserContext);
 
   const {
     register,
@@ -61,24 +62,29 @@ export default function Register() {
           name: data.name,
           email: data.email,
           password: data.password,
-        }
+        },
+        { withCredentials: true }
       );
 
-      if (response.data.message === "User registered successfully") {
-        Swal.fire({
-          icon: "success",
-          title: "مرحباً!",
-          text: "تم إنشاء حسابك بنجاح.",
-          confirmButtonText: "متابعة",
-          customClass: {
-            confirmButton: "bg-green-500 text-white px-4 py-2 rounded-lg",
-          },
-        }).then(() => {
-          navigate("/");
-        });
-      } else {
-        throw new Error(response.data.message || "فشل التسجيل");
-      }
+      const userRole = response.data.role || "user";
+
+      updateRole(userRole);
+
+      localStorage.setItem("userRole", userRole);
+
+      // Show success alert
+      Swal.fire({
+        icon: "success",
+        title: "مرحباً!",
+        text: "تم إنشاء حسابك بنجاح.",
+        confirmButtonText: "متابعة",
+        customClass: {
+          confirmButton: "bg-green-500 text-white px-4 py-2 rounded-lg",
+        },
+      }).then(() => {
+        // Navigate after signup
+        navigate("/");
+      });
     } catch (error) {
       Swal.fire({
         icon: "error",

@@ -1,4 +1,3 @@
-// src/pages/TeacherCourses.jsx
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
@@ -26,34 +25,36 @@ const TeacherCourses = () => {
   }, []);
 
   return (
-    <div className="p-6">
+    <div className="ml-64 p-6 bg-gray-100 min-h-screen">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">كورساتي</h1>
+        <h1 className="text-2xl font-bold text-gray-800">كورساتي</h1>
         <Link
           to="/teacher-dashboard/CreateCoursePage"
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
         >
           + إنشاء كورس جديد
         </Link>
       </div>
 
       {courses.length === 0 ? (
-        <p>لا يوجد كورسات بعد.</p>
+        <p className="text-gray-700">لا يوجد كورسات بعد.</p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {courses.map((course) => (
             <div
               key={course._id}
-              className="bg-white shadow-md rounded p-4 border border-gray-200 flex flex-col"
+              className="bg-white shadow-md rounded-2xl p-5 border border-gray-200 flex flex-col"
             >
               {course.coursePicture && (
                 <img
                   src={`http://localhost:5000/${course.coursePicture}`}
                   alt={course.courseTitle}
-                  className="w-full h-40 object-cover rounded mb-4"
+                  className="w-full h-40 object-cover rounded-xl mb-4"
                 />
               )}
-              <h2 className="text-lg font-semibold">{course.courseTitle}</h2>
+              <h2 className="text-lg font-semibold text-gray-800">
+                {course.courseTitle}
+              </h2>
               <p className="text-gray-600 text-sm mb-4">
                 {course.courseDescription}
               </p>
@@ -74,7 +75,7 @@ const TeacherCourses = () => {
                 </Link>
 
                 <button
-                  className="bg-red-500 text-white py-1.5 px-3 rounded hover:bg-red-600"
+                  className="bg-red-500 text-white py-1.5 px-3 rounded hover:bg-red-600 text-center"
                   onClick={() => alert("تأكيد الحذف راح نعمله بعدين")}
                 >
                   حذف الكورس
