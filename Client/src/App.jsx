@@ -116,6 +116,7 @@ function App() {
         <Route path="/superadmin/students" element={<Students />} />
         <Route path="/superadmin/quiz" element={<Quis />} />
         <Route path="/exams" element={<Exams />} />
+
         <Route path="/ijazat" element={<Ijazeh />} />
       </Routes>
       {/* </Router> */}

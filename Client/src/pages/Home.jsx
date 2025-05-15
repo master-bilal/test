@@ -1,11 +1,19 @@
+import axios from "axios"; 
 import {
   BookOpen,
   Video,
-  Award,
+  BookHeadphones,
   BookText,
   Users,
   ChevronDown,
+  Award,
+  Clock,
+  CheckCircle,
 } from "lucide-react";
+import AOS from "aos";
+import "aos/dist/aos.css";
+import { Link } from "react-router-dom";
+
 import { useState, useEffect } from "react";
 import image from "../images/with construction.jpg";
 
@@ -16,6 +24,32 @@ const Home = () => {
     hours: 5940,
     graduateStudents: 960,
   });
+  // أضف هذه الحالات لإدارة بيانات الكورسات
+  const [courses, setCourses] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  // داخل الكومبوننت الرئيسي (بعد useState)
+  useEffect(() => {
+    // تهيئة مكتبة الأنيميشن
+    AOS.init({
+      duration: 800,
+      once: true,
+    });
+  }, []);
+  useEffect(() => {
+    // جلب بيانات الكورسات
+    setIsLoading(true);
+    axios
+      .get("http://localhost:5000/api/shop/courses")
+      .then((res) => {
+        setCourses(res.data);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setIsLoading(false);
+      });
+  }, []);
+
   return (
     <>
       <div className=" text-right" dir="rtl">
@@ -47,7 +81,7 @@ const Home = () => {
 
             {/* Main Heading - Arabic Text */}
             <h1
-              className="text-5xl md:text-6xl font-bold mb-2 leading-tight"
+              className="text-5xl md:text-6xl font-bold mb-2 leading-tight text-white"
               dir="rtl"
             >
               <span className="block">الفرقان منصة رقمية لتعليم</span>
@@ -55,15 +89,20 @@ const Home = () => {
             </h1>
 
             {/* Subheading - Arabic Text */}
-            <p className="text-lg md:text-xl max-w-3xl mb-8 mt-4" dir="rtl">
+            <p
+              className="text-lg md:text-xl max-w-3xl mb-8 mt-4 text-white"
+              dir="rtl"
+            >
               منصة تعليمية تفاعلية متكاملة ذات بيئة آمنة تهدف إلى تقريب أهل
               القرآن على بُعد أقطارهم من معلمين ومتعلمين.
             </p>
 
             {/* Subscribe/Join Button */}
-            <button className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 px-8 rounded-md text-lg transition duration-300 mt-4">
-              اشترك الآن
-            </button>
+            <Link to="/login">
+              <button className="bg-green-600 hover:bg-white hover:text-green-600 text-white font-bold py-3 px-8 rounded-md text-lg transition duration-300 mt-4">
+                سجل الآن{" "}
+              </button>
+            </Link>
 
             {/* Stats Section */}
             <div className="absolute bottom-10 left-0 right-0">
@@ -71,15 +110,15 @@ const Home = () => {
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
                   {/* Students Count */}
                   <div className="flex flex-col items-center">
-                    <span className="text-3xl font-bold text-white">
+                    <span className="text-3xl font-bold text-green-600">
                       {stats.students}
                     </span>
-                    <span className="text-sm text-white mt-1" dir="rtl">
+                    <span className="text-sm text-green-600 mt-1" dir="rtl">
                       عدد طلاب المنصة
                     </span>
                     <div className="mt-2">
                       <svg
-                        className="w-8 h-8 text-yellow-500"
+                        className="w-8 h-8 text-green-600"
                         viewBox="0 0 24 24"
                       >
                         <path
@@ -96,15 +135,15 @@ const Home = () => {
 
                   {/* Study Hours */}
                   <div className="flex flex-col items-center">
-                    <span className="text-3xl font-bold text-white">
+                    <span className="text-3xl font-bold text-green-600">
                       {stats.hours}
                     </span>
-                    <span className="text-sm text-white mt-1" dir="rtl">
+                    <span className="text-sm text-green-600 mt-1" dir="rtl">
                       عدد الساعات الدراسية
                     </span>
                     <div className="mt-2">
                       <svg
-                        className="w-8 h-8 text-yellow-500"
+                        className="w-8 h-8 text-green-600"
                         viewBox="0 0 24 24"
                       >
                         <path
@@ -121,15 +160,15 @@ const Home = () => {
 
                   {/* Programs Count */}
                   <div className="flex flex-col items-center">
-                    <span className="text-3xl font-bold text-white">
+                    <span className="text-3xl font-bold text-green-600">
                       {stats.courses}
                     </span>
-                    <span className="text-sm text-white mt-1" dir="rtl">
+                    <span className="text-sm text-green-600 mt-1" dir="rtl">
                       عدد البرامج
                     </span>
                     <div className="mt-2">
                       <svg
-                        className="w-8 h-8 text-yellow-500"
+                        className="w-8 h-8 text-green-600"
                         viewBox="0 0 24 24"
                       >
                         <path
@@ -146,15 +185,15 @@ const Home = () => {
 
                   {/* Graduate Students */}
                   <div className="flex flex-col items-center">
-                    <span className="text-3xl font-bold text-white">
+                    <span className="text-3xl font-bold text-green-600">
                       {stats.graduateStudents}
                     </span>
-                    <span className="text-sm text-white mt-1" dir="rtl">
+                    <span className="text-sm text-green-600 mt-1" dir="rtl">
                       عدد طلاب المقررات الإلكترونية
                     </span>
                     <div className="mt-2">
                       <svg
-                        className="w-8 h-8 text-yellow-500"
+                        className="w-8 h-8 text-green-600"
                         viewBox="0 0 24 24"
                       >
                         <path
@@ -193,9 +232,9 @@ const Home = () => {
                   desc: "دروس مباشرة عبر الإنترنت مع أفضل المشايخ والمقرئين",
                 },
                 {
-                  icon: <Award size={32} />,
-                  title: "شهادات معتمدة",
-                  desc: "شهادات معتمدة من كبرى المؤسسات القرآنية حول العالم",
+                  icon: <BookHeadphones size={32} />,
+                  title: "القرآن الكريم صوت وصورة",
+                  desc: "نسخة إلكترونية للقرآن الكريم بأكثر من صوت",
                 },
                 {
                   icon: <BookText size={32} />,
@@ -220,7 +259,7 @@ const Home = () => {
           </div>
         </section>
 
-        {/* قسم الدورات */}
+        {/* قسم الدورات - النسخة المحدثة */}
         <section className="py-16 bg-gray-50">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
@@ -230,183 +269,183 @@ const Home = () => {
               <div className="h-1 w-20 bg-green-600 mx-auto"></div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {[
-                {
-                  title: "تحسين التلاوة",
-                  level: "مبتدئ",
-                  students: 120,
-                  lessons: 16,
-                },
-                {
-                  title: "أحكام التجويد",
-                  level: "متوسط",
-                  students: 85,
-                  lessons: 24,
-                },
-                {
-                  title: "إجازة برواية حفص",
-                  level: "متقدم",
-                  students: 64,
-                  lessons: 32,
-                },
-              ].map((course, idx) => (
-                <div
-                  key={idx}
-                  className="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
-                >
-                  <div className="h-48 bg-green-600 flex items-center justify-center">
-                    <img
-                      src={`/api/placeholder/400/200`}
-                      alt={course.title}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <div className="p-6">
-                    <div className="flex justify-between items-center mb-3">
-                      <span className="bg-green-100 text-green-800 text-sm font-medium px-3 py-1 rounded-full">
-                        {course.level}
-                      </span>
-                      <div className="flex items-center text-gray-500 text-sm">
-                        <Users size={16} className="ml-1" />
-                        <span>{course.students} طالب</span>
-                      </div>
-                    </div>
-                    <h3 className="text-xl font-bold text-gray-800 mb-3">
-                      {course.title}
-                    </h3>
-                    <div className="mb-4 text-gray-600">
-                      <div className="flex items-center mb-2">
-                        <BookText size={16} className="ml-2" />
-                        <span>{course.lessons} درساً</span>
-                      </div>
-                      <div className="flex items-center">
-                        <Video size={16} className="ml-2" />
-                        <span>دروس مباشرة أونلاين</span>
-                      </div>
-                    </div>
-                    <a
-                      href="#"
-                      className="block w-full py-2 text-center bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors duration-300"
+            {isLoading ? (
+              <div className="flex justify-center items-center h-64">
+                <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-green-600"></div>
+              </div>
+            ) : courses.length === 0 ? (
+              <div className="text-center py-12">
+                <BookOpen className="mx-auto text-green-300" size={64} />
+                <h3 className="text-2xl font-bold text-gray-600 mt-4">
+                  لا توجد دورات متاحة حالياً
+                </h3>
+              </div>
+            ) : (
+              <>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {courses.slice(0, 3).map((course) => (
+                    <Link
+                      to={`/shop/courses/${course._id}`}
+                      key={course._id}
+                      className="block"
                     >
-                      تسجيل في الدورة
-                    </a>
-                  </div>
+                      <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden transform hover:-translate-y-1 h-full">
+                        <div className="relative">
+                          <img
+                            src={`http://localhost:5000/${course.coursePicture}`}
+                            alt={course.courseTitle}
+                            className="w-full h-52 object-cover"
+                            onError={(e) => {
+                              e.target.onerror = null;
+                              e.target.src = "/api/placeholder/400/250";
+                            }}
+                          />
+                          <div className="absolute top-4 left-4 bg-green-600 text-white px-3 py-1 rounded-full text-sm font-bold">
+                            {course.price} دينار
+                          </div>
+                        </div>
+                        <div className="p-6">
+                          <h3 className="text-xl font-bold text-green-800 mb-2">
+                            {course.courseTitle}
+                          </h3>
+                          <p className="text-gray-600 mb-4 line-clamp-2">
+                            {course.courseDescription ||
+                              "لا يوجد وصف لهذه الدورة"}
+                          </p>
+                          <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                            <div className="flex items-center">
+                              <Users
+                                className="text-green-600 mr-2"
+                                size={16}
+                              />
+                              <span className="text-sm text-gray-600">
+                                {course.teacher?.username || "مدرس غير معروف"}
+                              </span>
+                            </div>
+                            <span className="bg-green-100 text-green-800 text-xs font-medium px-3 py-1 rounded-full">
+                              تفاصيل الدورة
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
                 </div>
-              ))}
-            </div>
 
-            <div className="text-center mt-10">
-              <a
-                href="#"
-                className="inline-flex items-center px-6 py-3 bg-white border-2 border-green-600 text-green-600 font-bold rounded-md hover:bg-green-50 transition-colors duration-300"
-              >
-                عرض جميع الدورات
-                <ChevronDown size={16} className="mr-2" />
-              </a>
-            </div>
+                <div className="text-center mt-10">
+                  <Link
+                    to="/shop/courses"
+                    className="inline-flex items-center px-6 py-3 bg-white border-2 border-green-600 text-green-600 font-bold rounded-md hover:bg-green-50 transition-colors duration-300"
+                  >
+                    عرض جميع الدورات
+                    <ChevronDown
+                      size={16}
+                      className="mr-2 transform rotate-270"
+                    />
+                  </Link>
+                </div>
+              </>
+            )}
           </div>
         </section>
 
-        {/* قسم المدرسين */}
+        {/* قسم الاختبارات التدريبية */}
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold text-gray-800 mb-4">
-                نخبة من المعلمين والمقرئين
+                اختبارات قياس المستوى المجانية
               </h2>
-              <div className="h-1 w-20 bg-green-600 mx-auto"></div>
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                اختبر معلوماتك القرآنية وتدرب على الأسئلة المشابهة لاختبارات
+                الإجازة
+              </p>
+              <div className="h-1 w-20 bg-green-600 mx-auto mt-4"></div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {[
-                {
-                  name: "الشيخ عبد الرحمن العوسي",
-                  role: "استاذ القراءات العشر",
-                },
-                { name: "الشيخ محمد الحافظ", role: "مجاز بالقراءات السبع" },
-                { name: "الشيخة نور القرشي", role: "استاذة التجويد" },
-                { name: "الشيخ أحمد المكي", role: "حافظ ومجاز بالعشر الصغرى" },
-              ].map((teacher, idx) => (
-                <div key={idx} className="text-center">
-                  <div className="w-32 h-32 bg-gray-200 rounded-full mx-auto mb-4 overflow-hidden">
-                    <img
-                      src={`/api/placeholder/150/150`}
-                      alt={teacher.name}
-                      className="w-full h-full object-cover"
-                    />
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {/* اختبار التجويد */}
+              <div
+                className="bg-gray-50 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border-l-4 border-green-600"
+                data-aos="fade-up"
+                data-aos-delay="100"
+              >
+                <div className="flex items-center mb-4">
+                  <div className="bg-green-100 p-3 rounded-full mr-4">
+                    <BookHeadphones className="text-green-600 w-8 h-8" />
                   </div>
                   <h3 className="text-xl font-bold text-gray-800">
-                    {teacher.name}
+                    اختبار التجويد
                   </h3>
-                  <p className="text-green-600">{teacher.role}</p>
                 </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* قسم الشهادات والاختبارات */}
-        <section className="py-16 bg-green-50">
-          <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-              <div>
-                <h2 className="text-3xl font-bold text-gray-800 mb-6">
-                  شهادات معتمدة واختبارات احترافية
-                </h2>
-                <p className="text-gray-600 mb-8 text-lg">
-                  حصول الطالب على شهادة تثبت مستواه وإتقانه للقرآن الكريم
-                  وعلومه. نقدم اختبارات إلكترونية متطورة ومقابلات عبر الفيديو مع
-                  المشايخ المتخصصين.
+                <p className="text-gray-600 mb-6">
+                  30 سؤالاً في أحكام التجويد الأساسية مع تصحيح فوري
                 </p>
-                <div className="space-y-4">
-                  {[
-                    "اختبارات إلكترونية تفاعلية",
-                    "مقابلات مباشرة مع المشايخ",
-                    "شهادات معتمدة من المؤسسات القرآنية",
-                    "إمكانية الحصول على الإجازة عن بعد",
-                  ].map((item, idx) => (
-                    <div key={idx} className="flex items-center">
-                      <div className="w-6 h-6 rounded-full bg-green-600 text-white flex items-center justify-center ml-3">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-4 w-4"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M5 13l4 4L19 7"
-                          />
-                        </svg>
-                      </div>
-                      <span className="text-gray-700">{item}</span>
-                    </div>
-                  ))}
-                </div>
-                <div className="mt-8">
-                  <a
-                    href="#"
-                    className="px-6 py-3 bg-green-600 text-white font-bold rounded-md hover:bg-green-700 transition-colors duration-300"
-                  >
-                    التقدم للاختبار
-                  </a>
+                <div className="animate-pulse bg-gradient-to-r from-green-500 to-green-300 text-white text-center py-2 rounded-lg font-medium">
+                  مجاني بالكامل
                 </div>
               </div>
-              <div className="rounded-lg overflow-hidden shadow-lg">
-                <img
-                  src="/api/placeholder/500/400"
-                  alt="الشهادات والاختبارات"
-                  className="w-full"
-                />
+
+              {/* اختبار التلاوة */}
+              <div
+                className="bg-gray-50 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border-l-4 border-green-600"
+                data-aos="fade-up"
+                data-aos-delay="200"
+              >
+                <div className="flex items-center mb-4">
+                  <div className="bg-green-100 p-3 rounded-full mr-4">
+                    <BookOpen className="text-green-600 w-8 h-8" />
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-800">
+                    اختبار التلاوة
+                  </h3>
+                </div>
+                <p className="text-gray-600 mb-6">
+                  قياس دقة التلاوة ومراجعة الأخطاء الشائعة في النطق
+                </p>
+                <div className="animate-bounce bg-gradient-to-r from-green-500 to-green-300 text-white text-center py-2 rounded-lg font-medium">
+                  جديد
+                </div>
               </div>
+
+              {/* اختبار الحفظ */}
+              <div
+                className="bg-gray-50 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border-l-4 border-green-600"
+                data-aos="fade-up"
+                data-aos-delay="300"
+              >
+                <div className="flex items-center mb-4">
+                  <div className="bg-green-100 p-3 rounded-full mr-4">
+                    <BookText className="text-green-600 w-8 h-8" />
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-800">
+                    اختبار الحفظ
+                  </h3>
+                </div>
+                <p className="text-gray-600 mb-6">
+                  تقييم مستوى الحفظ مع تتبع التقدم عبر الزمن
+                </p>
+                <Link
+                  to="/tests"
+                  className="block bg-green-600 hover:bg-green-700 text-white text-center py-2 rounded-lg font-medium transition-colors duration-300"
+                >
+                  ابدأ الاختبار
+                </Link>
+              </div>
+            </div>
+
+            {/* زر عرض المزيد */}
+            <div className="text-center mt-12" data-aos="fade-up">
+              <Link
+                to="/all-tests"
+                className="inline-flex items-center px-6 py-3 bg-white border-2 border-green-600 text-green-600 font-bold rounded-md hover:bg-green-50 transition-colors duration-300"
+              >
+                تصفح جميع الاختبارات
+                <ChevronDown size={16} className="mr-2 transform rotate-270" />
+              </Link>
             </div>
           </div>
         </section>
-
         {/* قسم الإحصائيات */}
         <section className="py-12 bg-green-700 text-white">
           <div className="container mx-auto px-4">
