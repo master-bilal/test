@@ -1,159 +1,265 @@
-import { BookOpen, Phone } from "lucide-react";
+import React, { useState } from "react";
+import { MapPin, Phone, Mail } from "lucide-react";
+import { FaTwitter, FaInstagram, FaYoutube, FaFacebook } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import Modal from "react-modal";
+import Image from "../images/Screenshot_2025-05-14_221916-removebg-preview.png";
 
-const QuranFooter = () => {
+// تأكد من تعيين عنصر التطبيق الرئيسي للمودال
+Modal.setAppElement("#root");
+
+const Footer = () => {
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [modalContent, setModalContent] = useState("");
+
+  const openModal = (content) => {
+    setModalContent(content);
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
+
   return (
-    <footer className="bg-gray-800 text-white py-12 font-[Tajawal]" dir="rtl">
-      {/* تضمين خط Tajwal */}
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap');
-      `}</style>
-
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {/* القسم الأول: معلومات عن الموقع */}
-          <div>
-            <div className="flex items-center mb-4">
-              <div className="w-10 h-10 rounded-full bg-green-600 flex items-center justify-center ml-3">
-                <BookOpen className="text-white" size={20} />
-              </div>
-              <h3 className="text-xl font-bold">دار الإجازة للقرآن الكريم</h3>
+    <footer className="bg-white shadow-inner py-12">
+      <div className="container mx-auto px-6 lg:px-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+          {/* Logo and Description Section */}
+          <div className="flex flex-col items-center md:items-end">
+            <div className="mb-6">
+              <img
+                src={Image}
+                alt="الفرقان"
+                className="h-24 object-contain"
+              />
             </div>
-            <p className="text-gray-400 mb-4">
-              منصة تعليمية متخصصة في تعليم القرآن الكريم وعلومه عن بعد مع نخبة
-              من المشايخ والمقرئين.
+            <p className="text-gray-600 text-right leading-relaxed mb-8 text-base">
+              منصة آياتنا لتعليم القرآن الكريم عن بعد هي منصة تفاعلية توفر بيئة
+              آمنة تجمع بين المعلمين والمتعلمين عبر حلقات إلكترونية.
             </p>
-            <div className="flex space-x-4 space-x-reverse">
-              {/* أيقونات مواقع التواصل الاجتماعي */}
-              {[
-                { name: "facebook", icon: "fab fa-facebook-f" },
-                { name: "twitter", icon: "fab fa-twitter" },
-                { name: "instagram", icon: "fab fa-instagram" },
-                { name: "youtube", icon: "fab fa-youtube" },
-              ].map((social) => (
-                <a
-                  key={social.name}
-                  href="#"
-                  className="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center hover:bg-green-600 transition-colors duration-300"
-                  aria-label={social.name}
-                >
-                  <i className={social.icon}></i>
-                </a>
-              ))}
+            <div className="flex space-x-6 space-x-reverse">
+              <Link
+                to="#"
+                className="text-gray-400 hover:text-green-500 transition-all duration-300 transform hover:scale-110"
+              >
+                <FaTwitter size={20} />
+              </Link>
+              <Link
+                to="#"
+                className="text-gray-400 hover:text-green-500 transition-all duration-300 transform hover:scale-110"
+              >
+                <FaInstagram size={20} />
+              </Link>
+              <Link
+                to="#"
+                className="text-gray-400 hover:text-green-500 transition-all duration-300 transform hover:scale-110"
+              >
+                <FaYoutube size={20} />
+              </Link>
+              <Link
+                to="#"
+                className="text-gray-400 hover:text-green-500 transition-all duration-300 transform hover:scale-110"
+              >
+                <FaFacebook size={20} />
+              </Link>
             </div>
           </div>
 
-          {/* القسم الثاني: روابط سريعة */}
-          <div>
-            <h3 className="text-lg font-bold mb-4">روابط سريعة</h3>
-            <ul className="space-y-2">
-              {[
-                "الرئيسية",
-                "عن الدار",
-                "الدورات",
-                "الإجازات",
-                "أسئلة شائعة",
-                "تواصل معنا",
-              ].map((link) => (
-                <li key={link}>
-                  <a
-                    href="#"
-                    className="text-gray-400 hover:text-white transition-colors duration-300"
-                  >
-                    {link}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* القسم الثالث: التصنيفات */}
-          <div>
-            <h3 className="text-lg font-bold mb-4">التصنيفات</h3>
-            <ul className="space-y-2">
-              {[
-                "تحسين التلاوة",
-                "علم التجويد",
-                "القراءات العشر",
-                "علوم القرآن",
-                "حفظ القرآن",
-                "الإجازات",
-              ].map((cat) => (
-                <li key={cat}>
-                  <a
-                    href="#"
-                    className="text-gray-400 hover:text-white transition-colors duration-300"
-                  >
-                    {cat}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* القسم الرابع: تواصل معنا */}
-          <div>
-            <h3 className="text-lg font-bold mb-4">تواصل معنا</h3>
+          {/* Important Links Section */}
+          <div className="text-right">
+            <h3 className="text-xl font-semibold text-gray-800 mb-6 relative after:content-[''] after:absolute after:right-0 after:-bottom-2 after:w-16 after:h-1 after:bg-green-500">
+              روابط سريعة
+            </h3>
             <ul className="space-y-3">
-              <li className="flex items-start">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5 text-green-500 ml-3 mt-1"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
+              <li>
+                <Link
+                  to="aboutus"
+                  className="text-gray-600 hover:text-green-500 transition-all duration-200 hover:pr-2 inline-block text-base"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                  />
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                  />
-                </svg>
-                <span className="text-gray-400">
-                  المملكة العربية السعودية، الرياض
+                  عن المنصة
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="#"
+                  className="text-gray-600 hover:text-green-500 transition-all duration-200 hover:pr-2 inline-block text-base"
+                >
+                  خدمات المنصة
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="#"
+                  className="text-gray-600 hover:text-green-500 transition-all duration-200 hover:pr-2 inline-block text-base"
+                >
+                  البرامج التعليمية
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="#"
+                  className="text-gray-600 hover:text-green-500 transition-all duration-200 hover:pr-2 inline-block text-base"
+                >
+                  المقرأة الإلكترونية
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="#"
+                  className="text-gray-600 hover:text-green-500 transition-all duration-200 hover:pr-2 inline-block text-base"
+                >
+                  الأسئلة الشائعة
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="#"
+                  className="text-gray-600 hover:text-green-500 transition-all duration-200 hover:pr-2 inline-block text-base"
+                >
+                  تطبيق منصة الفرقان
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Contact Us Section */}
+          <div className="text-right">
+            <h3 className="text-xl font-semibold text-gray-800 mb-6 relative after:content-[''] after:absolute after:right-0 after:-bottom-2 after:w-16 after:h-1 after:bg-green-500">
+              تواصل معنا
+            </h3>
+            <div className="space-y-4">
+              <div className="flex items-center justify-end">
+                <span className="text-gray-600 text-base">
+                  الأردن - عمان - الدوار السابع
                 </span>
-              </li>
-              <li className="flex items-center">
-                <Phone size={16} className="ml-3 text-green-500" />
-                <span className="text-gray-400">+966 123 456 7890</span>
-              </li>
-              <li className="flex items-center">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5 text-green-500 ml-3"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
+                <div className="ml-3 text-green-500">
+                  <MapPin size={20} />
+                </div>
+              </div>
+              <div className="flex items-center justify-end">
+                <span className="text-gray-600 font-medium text-base">
+                  +962 780787293
+                </span>
+                <div className="ml-3 text-green-500">
+                  <Phone size={20} />
+                </div>
+              </div>
+              <div className="flex items-center justify-end">
+                <span className="text-gray-600 text-base">
+                  Ayatuna@gmail.com
+                </span>
+                <div className="ml-3 text-green-500">
+                  <Mail size={20} />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Privacy Policy Section */}
+          <div className="text-right">
+            <h3 className="text-xl font-semibold text-gray-800 mb-6 relative after:content-[''] after:absolute after:right-0 after:-bottom-2 after:w-16 after:h-1 after:bg-green-500">
+              الخصوصية
+            </h3>
+            <ul className="space-y-3">
+              <li>
+                <button
+                  onClick={() => openModal("privacy")}
+                  className="text-gray-600 hover:text-green-500 transition-all duration-200 hover:pr-2 inline-block text-base"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                  />
-                </svg>
-                <span className="text-gray-400">info@quranacademy.com</span>
+                  سياسة الخصوصية
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => openModal("terms")}
+                  className="text-gray-600 hover:text-green-500 transition-all duration-200 hover:pr-2 inline-block text-base"
+                >
+                  الشروط والأحكام
+                </button>
               </li>
             </ul>
           </div>
         </div>
 
-        {/* شريط حقوق النشر */}
-        <div className="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
-          <p>
-            جميع الحقوق محفوظة © {new Date().getFullYear()} دار الإجازة للقرآن
-            الكريم
+        {/* Copyright Section */}
+        <div className="mt-16 pt-8 border-t border-gray-100">
+          <p className="text-center text-gray-500 text-base">
+            جميع الحقوق محفوظة لمنصة الفرقان © 2025
           </p>
         </div>
       </div>
+
+      {/* Modal for Privacy Policy and Terms */}
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        contentLabel="Privacy Policy or Terms Modal"
+        className="modal"
+        overlayClassName="modal-overlay"
+      >
+        <div className="p-6 text-right">
+          <h2 className="text-2xl font-bold mb-4">
+            {modalContent === "privacy" ? "سياسة الخصوصية" : "الشروط والأحكام"}
+          </h2>
+          {modalContent === "privacy" ? (
+            <div className="text-gray-700 space-y-4 text-base">
+              <p>هنا يتم وضع نص سياسة الخصوصية الكامل...</p>
+              <p>
+                يمكنك إضافة فقرات متعددة هنا لتوضيح سياسة الخصوصية الخاصة
+                بمنصتكم.
+              </p>
+              <p>تأكد من توافقها مع القوانين واللوائح المحلية والدولية.</p>
+            </div>
+          ) : (
+            <div className="text-gray-700 space-y-4 text-base">
+              <p>هنا يتم وضع نص الشروط والأحكام الكامل...</p>
+              <p>
+                يمكنك إضافة جميع الشروط التي يجب على المستخدمين الالتزام بها.
+              </p>
+              <p>تأكد من شمولية الشروط لجميع جوانب استخدام المنصة.</p>
+            </div>
+          )}
+          <button
+            onClick={closeModal}
+            className="mt-6 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors"
+          >
+            إغلاق
+          </button>
+        </div>
+      </Modal>
+
+      <style jsx global>{`
+        .modal {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          right: auto;
+          bottom: auto;
+          margin-right: -50%;
+          transform: translate(-50%, -50%);
+          width: 80%;
+          max-width: 700px;
+          max-height: 80vh;
+          overflow-y: auto;
+          background: white;
+          border-radius: 8px;
+          outline: none;
+          padding: 0;
+        }
+
+        .modal-overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-color: rgba(0, 0, 0, 0.5);
+          z-index: 1000;
+        }
+      `}</style>
     </footer>
   );
 };
 
-export default QuranFooter;
+export default Footer;

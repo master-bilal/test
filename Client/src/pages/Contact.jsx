@@ -84,7 +84,7 @@ const Contact = () => {
   return (
     <div
       id="cont"
-      className="flex flex-col md:flex-row items-center justify-between max-w-6xl mx-auto px-4 py-16 gap-8"
+      className="flex flex-col md:flex-row items-center justify-between max-w-6xl mx-auto px-4 py-16 gap-8 mt-16"
     >
       {/* Left side with illustration */}
       <div className="contact-image w-full md:w-1/2">
@@ -93,26 +93,14 @@ const Contact = () => {
           alt="Illustration of person sitting in chair with laptop and decorative elements"
           className="w-full max-w-lg mx-auto"
         />
-    <div className="bg-[#FFF7F2] min-h-screen py-16 mt-16">
-      {/* Header Section */}
-      <div className="max-w-5xl mx-auto px-6 mb-12">
-        <div className="relative text-center">
-          <div className="absolute inset-x-0 top-1/2 transform -translate-y-1/2 border-b-2 border-[#f8e5d7]"></div>
-          <h1 className="relative inline-block px-8 bg-[#FFF7F2] text-4xl font-bold text-[#AA1313]">
-            اتصل بنا
-          </h1>
-        </div>
-        <p className="text-center mt-6 text-gray-600 max-w-2xl mx-auto">
-          نحن هنا للإجابة على استفساراتك واستقبال ملاحظاتك
-        </p>
       </div>
 
       {/* Right side with form */}
       <div className="contact-form w-full md:w-1/2 max-w-lg">
         <h1 className="text-4xl font-bold text-green-600 mb-4">تواصل معنا</h1>
         <p className="text-gray-600 mb-8">
-          My inbox is always open! 💌 Whether you've got a burning question or
-          want to drop a friendly "hello", I'm all ears! 👂 Let's chat! 🐝
+          🌷 إذا كان لديك أي استفسار أو اقتراح أو ترغب في التواصل معنا، فنحن
+          هنال للاستماع
         </p>
 
         {/* Status message */}
