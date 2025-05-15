@@ -1,4 +1,4 @@
-import axios from "axios"; 
+import axios from "axios";
 import {
   BookOpen,
   Video,
@@ -13,9 +13,10 @@ import {
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { Link } from "react-router-dom";
-
 import { useState, useEffect } from "react";
 import image from "../images/with construction.jpg";
+import TestsSection from "../component/home/TestsSection";
+import PopularQuistions from "../component/home/PopularQuistions";
 
 const Home = () => {
   const [stats, setStats] = useState({
@@ -84,7 +85,7 @@ const Home = () => {
               className="text-5xl md:text-6xl font-bold mb-2 leading-tight text-white"
               dir="rtl"
             >
-              <span className="block">الفرقان منصة رقمية لتعليم</span>
+              <span className="block">آياتِنا منصة رقمية لتعليم</span>
               <span className="block">علوم القرآن الكريم</span>
             </h1>
 
@@ -348,123 +349,10 @@ const Home = () => {
             )}
           </div>
         </section>
-
-        {/* قسم الاختبارات التدريبية */}
-        <section className="py-16 bg-white">
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-gray-800 mb-4">
-                اختبارات قياس المستوى المجانية
-              </h2>
-              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                اختبر معلوماتك القرآنية وتدرب على الأسئلة المشابهة لاختبارات
-                الإجازة
-              </p>
-              <div className="h-1 w-20 bg-green-600 mx-auto mt-4"></div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {/* اختبار التجويد */}
-              <div
-                className="bg-gray-50 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border-l-4 border-green-600"
-                data-aos="fade-up"
-                data-aos-delay="100"
-              >
-                <div className="flex items-center mb-4">
-                  <div className="bg-green-100 p-3 rounded-full mr-4">
-                    <BookHeadphones className="text-green-600 w-8 h-8" />
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-800">
-                    اختبار التجويد
-                  </h3>
-                </div>
-                <p className="text-gray-600 mb-6">
-                  30 سؤالاً في أحكام التجويد الأساسية مع تصحيح فوري
-                </p>
-                <div className="animate-pulse bg-gradient-to-r from-green-500 to-green-300 text-white text-center py-2 rounded-lg font-medium">
-                  مجاني بالكامل
-                </div>
-              </div>
-
-              {/* اختبار التلاوة */}
-              <div
-                className="bg-gray-50 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border-l-4 border-green-600"
-                data-aos="fade-up"
-                data-aos-delay="200"
-              >
-                <div className="flex items-center mb-4">
-                  <div className="bg-green-100 p-3 rounded-full mr-4">
-                    <BookOpen className="text-green-600 w-8 h-8" />
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-800">
-                    اختبار التلاوة
-                  </h3>
-                </div>
-                <p className="text-gray-600 mb-6">
-                  قياس دقة التلاوة ومراجعة الأخطاء الشائعة في النطق
-                </p>
-                <div className="animate-bounce bg-gradient-to-r from-green-500 to-green-300 text-white text-center py-2 rounded-lg font-medium">
-                  جديد
-                </div>
-              </div>
-
-              {/* اختبار الحفظ */}
-              <div
-                className="bg-gray-50 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border-l-4 border-green-600"
-                data-aos="fade-up"
-                data-aos-delay="300"
-              >
-                <div className="flex items-center mb-4">
-                  <div className="bg-green-100 p-3 rounded-full mr-4">
-                    <BookText className="text-green-600 w-8 h-8" />
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-800">
-                    اختبار الحفظ
-                  </h3>
-                </div>
-                <p className="text-gray-600 mb-6">
-                  تقييم مستوى الحفظ مع تتبع التقدم عبر الزمن
-                </p>
-                <Link
-                  to="/tests"
-                  className="block bg-green-600 hover:bg-green-700 text-white text-center py-2 rounded-lg font-medium transition-colors duration-300"
-                >
-                  ابدأ الاختبار
-                </Link>
-              </div>
-            </div>
-
-            {/* زر عرض المزيد */}
-            <div className="text-center mt-12" data-aos="fade-up">
-              <Link
-                to="/all-tests"
-                className="inline-flex items-center px-6 py-3 bg-white border-2 border-green-600 text-green-600 font-bold rounded-md hover:bg-green-50 transition-colors duration-300"
-              >
-                تصفح جميع الاختبارات
-                <ChevronDown size={16} className="mr-2 transform rotate-270" />
-              </Link>
-            </div>
-          </div>
-        </section>
-        {/* قسم الإحصائيات */}
-        <section className="py-12 bg-green-700 text-white">
-          <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-center">
-              {[
-                { count: "+5000", label: "طالب وطالبة" },
-                { count: "+50", label: "معلم ومقرئ" },
-                { count: "+100", label: "دورة تعليمية" },
-                { count: "+1000", label: "شهادة ممنوحة" },
-              ].map((stat, idx) => (
-                <div key={idx}>
-                  <h3 className="text-4xl font-bold mb-2">{stat.count}</h3>
-                  <p className="text-lg">{stat.label}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
+        {/*قسم الاختبارات*/}
+        <TestsSection/>
+        {/*قسم الاسئلة الشائعة */}
+        <PopularQuistions/>
         {/* قسم انضم إلى طلابنا - القسم الجديد */}
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">

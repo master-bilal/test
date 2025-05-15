@@ -42,7 +42,7 @@ app.use("/api/courses", courseRoutes);
 app.use("/api", videoRoutes);
 app.use("/api", contactRoutes);
 app.use("/api/shop", shopRoutes);
-app.use("/api/payment", require("./routes/paymentRoutes"));
+// app.use("/api/payment", require("./routes/paymentRoutes"));
 app.use("/api/my-courses", myCoursesRoutes);
 app.use("/api/teacher", availabilityTeacher);
 app.use("/api/quiz", quizRoutes);
