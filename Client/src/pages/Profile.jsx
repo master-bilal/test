@@ -5,6 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import Booking from "../component/profile/Boking";
+import UserCourses from "../component/profile/UserCourses";
 
 export default function Profile() {
   const [user, setUser] = useState(null);
@@ -329,6 +330,7 @@ export default function Profile() {
         </div>
       </div>
       <Booking />
+      <UserCourses />
     </div>
   );
 }

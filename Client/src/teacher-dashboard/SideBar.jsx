@@ -18,41 +18,41 @@ const SideBar = () => {
 
   const links = [
     {
-      name: "Home",
+      name: "الرئيسية",
       path: "/teacher-dashboard/DashHome",
       icon: <ChartBarIcon className="w-5 h-5" />,
     },
     {
-      name: "AvailabilityTeacher",
+      name: "الجدول",
       path: "/teacher-dashboard/AvailabilityTeacher",
       icon: <DocumentTextIcon className="w-5 h-5" />,
     },
     {
-      name: "Teacher Courses",
+      name: "الدورات",
       path: "/teacher-dashboard/TeacherCourses",
       icon: <RectangleGroupIcon className="h-6 w-6" />,
     },
     {
-      name: "Users",
+      name: "المستخدمين",
       path: "/teacher-dashboard/DashUsers",
       icon: <UserCircleIcon className="w-5 h-5" />,
     },
     {
-      name: "Posts",
+      name: "المنشورات",
       path: "/postform",
       icon: <PencilIcon className="w-5 h-5" />,
     },
     {
-      name: "Contact",
+      name: "التواصل",
       path: "/conatactdash",
       icon: <ChatBubbleLeftIcon className="w-5 h-5" />,
     },
   ];
 
   const handleLogout = () => {
-    Cookies.remove("token"); // ← Optional: remove token cookie if used
-    logout(); // ← Context logout
-    navigate("/"); // ← Redirect to home
+    Cookies.remove("token");
+    logout();
+    navigate("/");
   };
 
   return (
@@ -86,7 +86,7 @@ const SideBar = () => {
         className="mt-auto flex justify-center items-center gap-2 p-3 rounded-md bg-emerald-600 hover:bg-emerald-500 transition-all duration-200 shadow-md"
       >
         <ArrowRightOnRectangleIcon className="w-5 h-5" />
-        <span>Logout</span>
+        <span>تسجيل الخروج</span>
       </button>
     </div>
   );

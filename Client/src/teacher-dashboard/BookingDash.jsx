@@ -36,8 +36,7 @@ const AvailabilityTeacher = () => {
       setAvailabilities(response.data);
       setError(null);
     } catch (err) {
-      console.error("Error fetching availabilities:", err);
-      setError("Failed to load your availabilities. Please try again.");
+      setError("فشل في تحميل المواعيد، حاول مرة أخرى.");
     } finally {
       setIsLoading(false);
     }
@@ -67,8 +66,7 @@ const AvailabilityTeacher = () => {
       });
       fetchAvailabilities();
     } catch (err) {
-      console.error("Error adding availability:", err);
-      setError("Failed to add availability. Please try again.");
+      setError("فشل في إضافة الموعد، حاول مرة أخرى.");
     }
   };
 
@@ -83,8 +81,7 @@ const AvailabilityTeacher = () => {
       );
       fetchAvailabilities();
     } catch (err) {
-      console.error("Error deleting availability:", err);
-      setError("Failed to delete availability. Please try again.");
+      setError("فشل في حذف الموعد، حاول مرة أخرى.");
     }
   };
 
@@ -92,7 +89,6 @@ const AvailabilityTeacher = () => {
     fetchAvailabilities();
   }, []);
 
-  // Group availabilities by date
   const groupedAvailabilities = availabilities.reduce((acc, availability) => {
     const date = availability.date;
     if (!acc[date]) {
@@ -107,7 +103,7 @@ const AvailabilityTeacher = () => {
       <div className="max-w-4xl mx-auto">
         <h2 className="text-2xl font-bold mb-6 text-gray-800 flex items-center">
           <CalendarIcon className="mr-2" size={24} />
-          Teacher Availability Dashboard
+          لوحة مواعيد المعلم
         </h2>
 
         {error && (
@@ -119,7 +115,7 @@ const AvailabilityTeacher = () => {
         <div className="bg-white p-6 rounded-2xl shadow mb-8">
           <h3 className="text-lg font-semibold mb-4 text-gray-800 flex items-center">
             <Plus size={20} className="mr-2" />
-            Add New Availability
+            إضافة موعد جديد
           </h3>
           <form onSubmit={addAvailability} className="space-y-4">
             <div className="flex flex-col sm:flex-row gap-4">
@@ -174,7 +170,7 @@ const AvailabilityTeacher = () => {
               <input
                 type="url"
                 name="meetingUrl"
-                placeholder="Optional meeting link (Zoom, Google Meet, etc.)"
+                placeholder="رابط الاجتماع (اختياري)"
                 value={newAvailability.meetingUrl}
                 onChange={handleInputChange}
                 className="border rounded-lg pl-10 p-2 w-full"
@@ -185,7 +181,7 @@ const AvailabilityTeacher = () => {
               className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg transition flex items-center"
             >
               <Plus size={16} className="mr-2" />
-              Add Availability
+              إضافة الموعد
             </button>
           </form>
         </div>
@@ -193,18 +189,18 @@ const AvailabilityTeacher = () => {
         <div className="bg-white p-6 rounded-2xl shadow">
           <h3 className="text-lg font-semibold mb-4 text-gray-800 flex items-center">
             <Calendar size={20} className="mr-2" />
-            My Availabilities
+            مواعيدي
           </h3>
 
           {isLoading ? (
             <div className="text-center py-8">
               <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
-              <p className="mt-2 text-gray-600">Loading availabilities...</p>
+              <p className="mt-2 text-gray-600">جاري تحميل المواعيد...</p>
             </div>
           ) : availabilities.length === 0 ? (
             <div className="text-center py-8 text-gray-500">
               <Calendar size={48} className="mx-auto mb-4 opacity-30" />
-              <p>No availabilities added yet.</p>
+              <p>لا يوجد مواعيد مضافة بعد.</p>
             </div>
           ) : (
             Object.keys(groupedAvailabilities)
@@ -213,7 +209,7 @@ const AvailabilityTeacher = () => {
                 <div key={date} className="mb-6">
                   <h4 className="font-medium text-gray-700 mb-2 flex items-center">
                     <Calendar size={16} className="mr-2" />
-                    {new Date(date).toLocaleDateString("en-US", {
+                    {new Date(date).toLocaleDateString("ar-EG", {
                       weekday: "long",
                       year: "numeric",
                       month: "long",
@@ -246,12 +242,12 @@ const AvailabilityTeacher = () => {
                               {availability.isBooked ? (
                                 <>
                                   <XCircle size={12} className="mr-1" />
-                                  Booked
+                                  محجوز
                                 </>
                               ) : (
                                 <>
                                   <CheckCircle size={12} className="mr-1" />
-                                  Available
+                                  متاح
                                 </>
                               )}
                             </span>
@@ -265,7 +261,7 @@ const AvailabilityTeacher = () => {
                                 rel="noopener noreferrer"
                                 className="text-blue-600 hover:text-blue-800 text-sm underline"
                               >
-                                Join Meeting
+                                الدخول للاجتماع
                               </a>
                             </div>
                           )}
@@ -277,7 +273,7 @@ const AvailabilityTeacher = () => {
                                 deleteAvailability(availability._id)
                               }
                               className="p-2 text-red-600 hover:bg-red-100 rounded-lg transition-colors"
-                              title="Delete availability"
+                              title="حذف الموعد"
                             >
                               <Trash2 size={16} />
                             </button>
