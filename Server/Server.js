@@ -14,6 +14,7 @@ const shopRoutes = require("./routes/shopRoutes");
 const myCoursesRoutes = require("./routes/myCoursesRoutes");
 const availabilityTeacher = require("./routes/availabilityTeacherRoutes");
 const quizRoutes = require("./routes/quizRoutes");
+const bookingRoutes = require("./routes/bookingRoutes");
 
 const app = express();
 
@@ -42,18 +43,11 @@ app.use("/api/courses", courseRoutes);
 app.use("/api", videoRoutes);
 app.use("/api", contactRoutes);
 app.use("/api/shop", shopRoutes);
-app.use("/api/payment", require("./routes/paymentRoutes"));
 app.use("/api/my-courses", myCoursesRoutes);
 app.use("/api/teacher", availabilityTeacher);
 app.use("/api/quiz", quizRoutes);
+app.use("/api/bookings", bookingRoutes);
 
-// app.use("/api/videos", videoRoutes);
-
-// app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
-
-// app.use("/uploads", express    .static("public/uploads"));
-
-// Serve static files للبروفايل
 app.use("/public", express.static(path.join(__dirname, "public")));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 

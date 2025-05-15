@@ -35,62 +35,6 @@ const CourseDetails = () => {
 
     fetchCourseDetails();
   }, [id]);
-  useEffect(() => {
-    if (window.paypal && course) {
-      window.paypal
-        .Buttons({
-          createOrder: (data, actions) => {
-            return actions.order.create({
-              purchase_units: [
-                {
-                  amount: {
-                    value: course.price.toString(), // تأكد أن السعر هو رقم كنص
-                    currency_code: "USD",
-                  },
-                  description: course.courseTitle,
-                },
-              ],
-            });
-          },
-          onApprove: async (data, actions) => {
-            try {
-              const details = await actions.order.capture();
-              alert("تم الدفع بنجاح");
-
-              const response = await axios.post(
-                "http://localhost:5000/api/payment",
-                {
-                  withCredentials: true,
-                  // headers: { "Content-Type": "application/json" },
-                },
-                {
-                  courseId: course._id,
-                  courseTitle: course.courseTitle,
-                  amount: course.price,
-                  orderId: data.orderID,
-                  paymentDetails: details,
-                }
-              );
-
-              console.log("✅ بيانات الدفع المحفوظة:", response.data);
-            } catch (error) {
-              console.error(
-                "❌ خطأ أثناء حفظ الدفع:",
-                error.response?.data || error.message
-              );
-            }
-
-            // يمكنك التحديث بعد الدفع أو توجيه المستخدم
-          },
-        })
-        .render("#paypal-button");
-    }
-  }, [course]);
-
-  const handlePayPalSuccess = (details, data) => {
-    alert("تمت عملية الدفع بنجاح!");
-    // يمكنك هنا إضافة المزيد من التعامل مع عملية الدفع مثل حفظ حالة الدفع أو التحديث في قاعدة البيانات
-  };
 
   if (isLoading) {
     return (
@@ -135,7 +79,7 @@ const CourseDetails = () => {
 
   return (
     <div className="bg-white min-h-screen" dir="rtl">
-      {/* Header Section */}
+      {/* Header */}
       <div className="bg-green-600 text-white py-12 px-6">
         <div className="container mx-auto">
           <Link
@@ -165,12 +109,12 @@ const CourseDetails = () => {
         </div>
       </div>
 
-      {/* Course Details Section */}
+      {/* Main Content */}
       <div className="container mx-auto py-8 px-6">
         <div className="flex flex-col lg:flex-row gap-8">
-          {/* Main Content */}
+          {/* Left Side */}
           <div className="lg:w-2/3">
-            {/* Course Image */}
+            {/* Image */}
             <div className="mb-8 rounded-xl overflow-hidden shadow-lg">
               <img
                 src={`http://localhost:5000/${course.coursePicture}`}
@@ -183,7 +127,7 @@ const CourseDetails = () => {
               />
             </div>
 
-            {/* Course Description */}
+            {/* Description */}
             <div className="bg-white rounded-xl shadow-md p-6 mb-8">
               <h2 className="text-2xl font-bold text-green-800 mb-4">
                 وصف الكورس
@@ -194,7 +138,7 @@ const CourseDetails = () => {
               </p>
             </div>
 
-            {/* Videos Section */}
+            {/* Videos */}
             <div className="bg-white rounded-xl shadow-md p-6">
               <h2 className="text-2xl font-bold text-green-800 mb-6">
                 محتوى الكورس
@@ -238,7 +182,7 @@ const CourseDetails = () => {
           {/* Sidebar */}
           <div className="lg:w-1/3">
             <div className="bg-white rounded-xl shadow-md p-6 sticky top-4">
-              {/* Teacher Info */}
+              {/* Teacher */}
               <div className="mb-6 pb-6 border-b border-gray-200">
                 <h3 className="text-xl font-bold text-green-800 mb-4">
                   معلومات المدرس
@@ -307,12 +251,7 @@ const CourseDetails = () => {
                 }}
               >
                 <PayPalButtons
-                  style={{
-                    layout: "vertical",
-                    color: "gold",
-                    shape: "rect",
-                    label: "paypal",
-                  }}
+                  style={{ layout: "vertical", color: "gold" }}
                   createOrder={(data, actions) => {
                     return actions.order.create({
                       purchase_units: [
@@ -331,21 +270,20 @@ const CourseDetails = () => {
                     alert("تم الدفع بنجاح");
 
                     try {
-                      const response = await axios.post(
-                        "http://localhost:5000/api/payment",
+                      const bookingResponse = await axios.post(
+                        "http://localhost:5000/api/bookings/book",
                         {
                           courseId: course._id,
-                          courseTitle: course.courseTitle,
-                          amount: course.price,
+                          price: course.price,
                           orderId: data.orderID,
-                          paymentDetails: details,
+                          paymentStatus: "paid",
                         },
                         { withCredentials: true }
                       );
-                      console.log("✅ بيانات الدفع المحفوظة:", response.data);
+                      console.log("✅ Booking created:", bookingResponse.data);
                     } catch (error) {
                       console.error(
-                        "❌ خطأ أثناء حفظ الدفع:",
+                        "❌ Error during payment or booking:",
                         error.response?.data || error.message
                       );
                     }
@@ -355,11 +293,6 @@ const CourseDetails = () => {
                   }}
                 />
               </PayPalScriptProvider>
-
-              {/* Purchase Button */}
-              <button className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300">
-                اشترك في الكورس
-              </button>
             </div>
           </div>
         </div>

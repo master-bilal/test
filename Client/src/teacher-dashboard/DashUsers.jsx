@@ -41,9 +41,8 @@ const DashUsers = () => {
         "http://localhost:5000/api/admin/users/stats"
       );
       setStats(response.data);
-      console.log(response.data); // Check the structure here
     } catch (error) {
-      console.error("Error fetching stats:", error);
+      console.error("حدث خطأ أثناء جلب الإحصائيات:", error);
     }
   };
 
@@ -65,7 +64,7 @@ const DashUsers = () => {
       setUsers(response.data.users);
       setTotalPages(response.data.totalPages);
     } catch (error) {
-      console.error("Error fetching users:", error);
+      console.error("حدث خطأ أثناء جلب المستخدمين:", error);
     } finally {
       setLoading(false);
     }
@@ -79,7 +78,7 @@ const DashUsers = () => {
       setSelectedUser(response.data);
       setIsModalOpen(true);
     } catch (error) {
-      console.error("Error fetching user details:", error);
+      console.error("حدث خطأ أثناء جلب تفاصيل المستخدم:", error);
     }
   };
 
@@ -91,7 +90,7 @@ const DashUsers = () => {
       fetchUsers();
       fetchStats();
     } catch (error) {
-      console.error("Error updating user role:", error);
+      console.error("حدث خطأ أثناء تحديث دور المستخدم:", error);
     }
   };
 
@@ -103,7 +102,7 @@ const DashUsers = () => {
       fetchUsers();
       fetchStats();
     } catch (error) {
-      console.error("Error toggling user status:", error);
+      console.error("حدث خطأ أثناء تغيير حالة المستخدم:", error);
     }
   };
 
@@ -118,7 +117,9 @@ const DashUsers = () => {
       <span
         className={`px-2 py-1 rounded-full text-xs font-semibold ${roleClasses[role]}`}
       >
-        {role}
+        {role === "user" && "مستخدم"}
+        {role === "teacher" && "مدرس"}
+        {role === "admin" && "مدير"}
       </span>
     );
   };
@@ -126,11 +127,11 @@ const DashUsers = () => {
   const renderStatusBadge = (isDeleted) => {
     return isDeleted ? (
       <span className="px-2 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-800">
-        Inactive
+        غير نشط
       </span>
     ) : (
       <span className="px-2 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800">
-        Active
+        نشط
       </span>
     );
   };
@@ -138,10 +139,9 @@ const DashUsers = () => {
   return (
     <div className="ml-64 px-8 py-8 w-full">
       <h1 className="text-3xl font-bold text-gray-800 mb-8">
-        User Management Dashboard
+        لوحة تحكم إدارة المستخدمين
       </h1>
 
-      {/* Statistics Cards */}
       {stats && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
           <div className="bg-white rounded-lg shadow p-6 flex items-center">
@@ -149,7 +149,7 @@ const DashUsers = () => {
               <FiUsers size={24} />
             </div>
             <div>
-              <p className="text-gray-500 text-sm">Total Users</p>
+              <p className="text-gray-500 text-sm">إجمالي المستخدمين</p>
               <p className="text-2xl font-bold">{stats.totalUsers}</p>
             </div>
           </div>
@@ -159,7 +159,7 @@ const DashUsers = () => {
               <FiUser size={24} />
             </div>
             <div>
-              <p className="text-gray-500 text-sm">Regular Users</p>
+              <p className="text-gray-500 text-sm">المستخدمون العاديون</p>
               <p className="text-2xl font-bold">{stats.userCount}</p>
             </div>
           </div>
@@ -169,7 +169,7 @@ const DashUsers = () => {
               <FaChalkboardTeacher size={24} />
             </div>
             <div>
-              <p className="text-gray-500 text-sm">Teachers</p>
+              <p className="text-gray-500 text-sm">المدرسون</p>
               <p className="text-2xl font-bold">{stats.teacherCount}</p>
             </div>
           </div>
@@ -179,7 +179,7 @@ const DashUsers = () => {
               <FaUserShield size={24} />
             </div>
             <div>
-              <p className="text-gray-500 text-sm">Admins</p>
+              <p className="text-gray-500 text-sm">المدراء</p>
               <p className="text-2xl font-bold">{stats.adminCount}</p>
             </div>
           </div>
@@ -189,14 +189,13 @@ const DashUsers = () => {
               <FiUserX size={24} />
             </div>
             <div>
-              <p className="text-gray-500 text-sm">Inactive Users</p>
+              <p className="text-gray-500 text-sm">المستخدمون غير النشطين</p>
               <p className="text-2xl font-bold">{stats.inactiveCount}</p>
             </div>
           </div>
         </div>
       )}
 
-      {/* Filters and Search */}
       <div className="bg-white rounded-lg shadow p-6 mb-8">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div className="relative flex-grow max-w-md">
@@ -206,7 +205,7 @@ const DashUsers = () => {
             <input
               type="text"
               className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-              placeholder="Search by username or email"
+              placeholder="ابحث باسم المستخدم أو البريد الإلكتروني"
               value={searchTerm}
               onChange={(e) => {
                 setSearchTerm(e.target.value);
@@ -224,10 +223,10 @@ const DashUsers = () => {
                 setCurrentPage(1);
               }}
             >
-              <option value="">All Roles</option>
-              <option value="user">User</option>
-              <option value="teacher">Teacher</option>
-              <option value="admin">Admin</option>
+              <option value="">جميع الصلاحيات</option>
+              <option value="user">مستخدم</option>
+              <option value="teacher">مدرس</option>
+              <option value="admin">مدير</option>
             </select>
 
             <select
@@ -238,18 +237,17 @@ const DashUsers = () => {
                 setCurrentPage(1);
               }}
             >
-              <option value="">All Statuses</option>
-              <option value="active">Active</option>
-              <option value="inactive">Inactive</option>
+              <option value="">جميع الحالات</option>
+              <option value="active">نشط</option>
+              <option value="inactive">غير نشط</option>
             </select>
           </div>
         </div>
       </div>
 
-      {/* Users Table */}
       <div className="bg-white rounded-lg shadow overflow-hidden mb-8">
         {loading ? (
-          <div className="p-8 text-center">Loading users...</div>
+          <div className="p-8 text-center">جاري تحميل المستخدمين...</div>
         ) : (
           <>
             <div className="overflow-x-auto">
@@ -258,39 +256,39 @@ const DashUsers = () => {
                   <tr>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
                     >
-                      User
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      Email
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      Role
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      Status
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      Joined
+                      المستخدم
                     </th>
                     <th
                       scope="col"
                       className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
                     >
-                      Actions
+                      البريد الإلكتروني
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      الصلاحية
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      الحالة
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      تاريخ الانضمام
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      الإجراءات
                     </th>
                   </tr>
                 </thead>
@@ -328,9 +326,9 @@ const DashUsers = () => {
                             updateUserRole(user._id, e.target.value)
                           }
                         >
-                          <option value="user">User</option>
-                          <option value="teacher">Teacher</option>
-                          <option value="admin">Admin</option>
+                          <option value="user">مستخدم</option>
+                          <option value="teacher">مدرس</option>
+                          <option value="admin">مدير</option>
                         </select>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
@@ -372,10 +370,9 @@ const DashUsers = () => {
         )}
       </div>
 
-      {/* Pagination */}
       <div className="flex items-center justify-between">
         <div className="text-sm text-gray-700">
-          Showing page {currentPage} of {totalPages}
+          عرض الصفحة {currentPage} من {totalPages}
         </div>
         <div className="flex space-x-2">
           <button
@@ -387,7 +384,7 @@ const DashUsers = () => {
                 : "hover:bg-gray-50"
             }`}
           >
-            Previous
+            السابق
           </button>
           <button
             onClick={() =>
@@ -400,19 +397,18 @@ const DashUsers = () => {
                 : "hover:bg-gray-50"
             }`}
           >
-            Next
+            التالي
           </button>
         </div>
       </div>
 
-      {/* User Details Modal */}
       {isModalOpen && selectedUser && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-screen overflow-y-auto">
             <div className="p-6">
               <div className="flex justify-between items-start mb-6">
                 <h2 className="text-2xl font-bold text-gray-800">
-                  User Details
+                  تفاصيل المستخدم
                 </h2>
                 <button
                   onClick={() => setIsModalOpen(false)}
@@ -459,11 +455,11 @@ const DashUsers = () => {
                     </div>
                     <div className="flex flex-col">
                       <div className="mb-2">
-                        <span className="font-medium">Role: </span>
+                        <span className="font-medium">الصلاحية: </span>
                         {renderRoleBadge(selectedUser.role)}
                       </div>
                       <div>
-                        <span className="font-medium">Status: </span>
+                        <span className="font-medium">الحالة: </span>
                         {renderStatusBadge(selectedUser.isdeleted)}
                       </div>
                     </div>
@@ -472,13 +468,13 @@ const DashUsers = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <h4 className="font-medium text-gray-700 mb-2">
-                        Account Created
+                        تاريخ إنشاء الحساب
                       </h4>
                       <p>{new Date(selectedUser.createdAt).toLocaleString()}</p>
                     </div>
                     <div>
                       <h4 className="font-medium text-gray-700 mb-2">
-                        Last Updated
+                        آخر تحديث
                       </h4>
                       <p>{new Date(selectedUser.updatedAt).toLocaleString()}</p>
                     </div>
@@ -486,10 +482,9 @@ const DashUsers = () => {
                 </div>
               </div>
 
-              {/* Courses Section */}
               <div className="mb-8">
                 <h3 className="text-xl font-semibold text-gray-800 mb-4">
-                  Courses ({selectedUser.courses?.length || 0})
+                  الدورات ({selectedUser.courses?.length || 0})
                 </h3>
                 {selectedUser.courses?.length > 0 ? (
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -508,14 +503,13 @@ const DashUsers = () => {
                     ))}
                   </div>
                 ) : (
-                  <p className="text-gray-500">No courses found</p>
+                  <p className="text-gray-500">لا توجد دورات</p>
                 )}
               </div>
 
-              {/* Certificates Section */}
               <div>
                 <h3 className="text-xl font-semibold text-gray-800 mb-4">
-                  Certificates ({selectedUser.Certificate?.length || 0})
+                  الشهادات ({selectedUser.Certificate?.length || 0})
                 </h3>
                 {selectedUser.Certificate?.length > 0 ? (
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -525,10 +519,10 @@ const DashUsers = () => {
                         className="border rounded-lg p-4 hover:shadow-md transition-shadow"
                       >
                         <h4 className="font-medium text-gray-800">
-                          Certificate for Course ID: {cert.courseId}
+                          شهادة للدورة رقم: {cert.courseId}
                         </h4>
                         <p className="text-sm text-gray-600 mt-1">
-                          Issued:{" "}
+                          تاريخ الإصدار:{" "}
                           {new Date(
                             cert.certificateIssuedDate
                           ).toLocaleDateString()}
@@ -539,13 +533,13 @@ const DashUsers = () => {
                           rel="noopener noreferrer"
                           className="text-blue-600 hover:underline text-sm mt-2 inline-block"
                         >
-                          View Certificate
+                          عرض الشهادة
                         </a>
                       </div>
                     ))}
                   </div>
                 ) : (
-                  <p className="text-gray-500">No certificates found</p>
+                  <p className="text-gray-500">لا توجد شهادات</p>
                 )}
               </div>
             </div>
